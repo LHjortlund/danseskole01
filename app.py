@@ -2,6 +2,7 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from models import db, Elev
+from routes import register_routes
 
 def create_app():
     app = Flask(__name__, template_folder='templates')
