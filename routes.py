@@ -8,7 +8,7 @@ def register_routes(app, db):
         return str(elev)
 
 
-    @app.route('/opret_elev', methods=["POST"])
+    @app.route('/opret_elev', methods=["Get", "POST"])
     def opret_elev():
         navn = request.form.get('navn')
         fodselsdato = request.form.get('fodselsdato')
@@ -19,4 +19,11 @@ def register_routes(app, db):
         db.session.add(ny_elev)
         db.session.commit()
 
-    return "Elev oprettet!", 201
+        return "Elev oprettet!", 201
+
+    @app.route('/elever', methods=['GET'])
+    def hent_elever():
+        elever = Elev.query.all()
+        elev_liste = [{'id': elev.id, 'navn': elev.navn, 'fodselsdato': elev.fodselsdato} for elev in elever]
+        return {"elever": elev_liste}
+
