@@ -25,7 +25,7 @@ def register_routes(app, db):
     @app.route('/elever', methods=["GET"])
     def get_elever():
         elever = Elev.query.all()
-        elev_liste = [{"navn": elev.navn, "fodselsdato": elev.fodselsdato} for elev in elever]
+        elev_liste = [{"id": elev.id, "navn": elev.navn, "fodselsdato": elev.fodselsdato} for elev in elever]
         return {"elever": elev_liste}
 
     @app.route('/opdater_elev/<int:elev_id>', methods=["PUT"])
@@ -47,8 +47,3 @@ def register_routes(app, db):
             db.session.commit()
             return {"message": "Elev slettet"}, 200
         return {"message": "Elev ikke fundet og ikke slettet"}, 400
-
-
-
-
-
