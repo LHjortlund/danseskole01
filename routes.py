@@ -1,11 +1,11 @@
-from flask import render_template, request
-from models import Elev
+from flask import render_template, request, redirect, url_for
+from models import Elev, db
 
 def register_routes(app, db):
     @app.route('/', )
     def index():
-        elev = Elev.query.all()
-        return str(elev)
+        elever = Elev.query.all()
+        return render_template('index.html', elever=elever)
 
 
     @app.route('/opret_elev', methods=["GET", "POST"])
@@ -19,8 +19,7 @@ def register_routes(app, db):
             ny_elev = Elev(navn=navn, fodselsdato=fodselsdato)
             db.session.add(ny_elev)
             db.session.commit()
-
-            return "Elev oprettet!", 201
+            return redirect(url_for('index'))
 
         return render_template('index.html')
 

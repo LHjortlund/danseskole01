@@ -7,13 +7,14 @@ from routes import register_routes
 def create_app():
     app = Flask(__name__, template_folder='templates')
     app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///danseskole.db'
-
     db.init_app(app)
 
-    # Register routes here
-    from routes import register_routes
-    register_routes(app, db)
-
     migrate = Migrate(app, db)
+
+    # Importer registrere routes og API
+    from routes import register_routes
+    from api import register_api
+    register_routes(app)
+    register_api(app)
 
     return app
