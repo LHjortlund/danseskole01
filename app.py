@@ -11,10 +11,9 @@ def create_app():
 
     migrate = Migrate(app, db)
 
-    # Importer registrere routes og API
-    from routes import register_routes
+    # Importerer samt registrere routes og API
     from api import register_api
-    register_routes(app)
+    register_routes(app, db)
     register_api(app)
 
     return app
