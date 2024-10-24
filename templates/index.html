@@ -23,11 +23,26 @@
         {% for elev in elever %}
         <li>
             {{ elev.navn }} {{ elev.fodselsdato }})
-            - <button onclick="sletEleve {{ elev.id }}">Slet</button>
+            - <button onclick="sletElev({{ elev.id }})">Slet</button>
             - <a href="/opdater_elev/{{ elev.id }}">Opdater</a>
         </li>
         {% endfor %}
     </ul>
+
+    <script>
+    function sletElev(elevId) {
+        console.log("Slet elev med ID:", elevId); // Debugging
+        fetch(`/slet_elev/${elevId}`, {
+            method: 'DELETE'
+        })
+        .then(response => response.json())
+        .then(data => {
+            alert(data.message);
+            location.reload(); // Opdaterer siden efter sletning
+        })
+        .catch(error => console.error('Fejl ved sletning:', error));
+    }
+</script>
 
 </body>
 </html>

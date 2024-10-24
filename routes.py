@@ -47,13 +47,13 @@ def register_routes(app, db):
             return {"message": "Elev ikke fundet"}, 400
         return render_template('index.html')
 
-    @app.route('/slet_elev/<int:elev_id>', methods=["GET", "DELETE"])
+    @app.route('/slet_elev/<int:elev_id>', methods=["DELETE"])
     def slet_elev(elev_id):
-        if request.method == "GET":
-            elev = Elev.query.get(elev_id)
-            if elev:
-                return render_template('slet_elev.html', elev= elev)
-            return "Elev ikke fundet", 404
+        # if request.method == "GET":
+        #     elev = Elev.query.get(elev_id)
+        #     if elev:
+        #         return render_template('slet_elev.html', elev= elev)
+        #     return "Elev ikke fundet", 404
 
         if request.method == "DELETE":
             elev = Elev.query.get(elev_id)
