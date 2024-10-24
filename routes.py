@@ -28,16 +28,24 @@ def register_routes(app, db):
         elev_liste = [{"id": elev.id, "navn": elev.navn, "fodselsdato": elev.fodselsdato} for elev in elever]
         return {"elever": elev_liste}
 
-    @app.route('/opdater_elev/<int:elev_id>', methods=["PUT"])
+    @app.route('/opdater_elev/<int:elev_id>', methods=["GET", "PUT"])
     def opdater_elev(elev_id):
-        data = request.get_json()
-        elev = Elev.query.get(elev_id)
-        if elev:
-            elev.navn = data.get("navn", elev.navn)
-            elev.fodselsdato = data.get("fodselsdato", elev.fodselsdato)
-            db.session.commit()
-            return {"message": "Elev opdateret"}, 200
-        return {"message": "Elev ikke fundet"}, 400
+        if request.method == "GET":
+            elev = Elev.query.get(elev_id)
+            if elev:
+                return render_template('opdater_elev.html', elev= elev)
+            return "Elev ikke fundet", 404
+
+        if request.method == "PUT":
+            data = request.get_json()
+            elev = Elev.query.get(elev_id)
+            if elev:
+                elev.navn = data.get("navn", elev.navn)
+                elev.fodselsdato = data.get("fodselsdato", elev.fodselsdato)
+                db.session.commit()
+                return {"message": "Elev opdateret"}, 200
+            return {"message": "Elev ikke fundet"}, 400
+        return render_template('index.html')
 
     @app.route('/slet_elev/<int:elev_id>', methods=["DELETE"])
     def slet_elev(elev_id):

@@ -25,11 +25,26 @@
         {% for elev in elever %}
         <li>
             {{ elev.navn }} {{ elev.fodselsdato }})
-            - <a href="/slet_elev/{{ elev.id }}">Slet</a>
+            - <button onclick="sletEleve {{ elev.id }}">Slet</button>
             - <a href="/opdater_elev/{{ elev.id }}">Opdater</a>
         </li>
         {% endfor %}
     </ul>
 
+    <script>
+        function sletElev(elevId) {
+            if (confirm("Er du sikker på, at du vil slette denne elev")) {
+                fetch(`/slet_elev/${elevId}`, { method: 'DELETE' })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.message == "Elev slettet") {
+                            location.reload(); //opdaterer siden
+                        } else {
+                            alert(data.message);
+                        }
+                    });
+            }
+        }
+    </script>
 </body>
 </html>
