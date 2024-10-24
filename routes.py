@@ -7,6 +7,10 @@ def register_routes(app, db):
         elever = Elev.query.all()
         return render_template('index.html', elever=elever)
 
+    @app.route('/elev')
+    def elev():
+        elever = Elev.query.all()  # Henter alle elever fra databasen
+        return render_template('elev.html', elever=elever)
 
     @app.route('/opret_elev', methods=["GET", "POST"])
     def opret_elev():
