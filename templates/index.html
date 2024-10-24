@@ -7,8 +7,6 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Danseskole</title>
 
-
-
 </head>
 <body>
     <h1>Velkommen til danseskolen DCT</h1>
@@ -31,20 +29,5 @@
         {% endfor %}
     </ul>
 
-    <script>
-        function sletElev(elevId) {
-            if (confirm("Er du sikker på, at du vil slette denne elev")) {
-                fetch(`/slet_elev/${elevId}`, { method: 'DELETE' })
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data.message == "Elev slettet") {
-                            location.reload(); //opdaterer siden
-                        } else {
-                            alert(data.message);
-                        }
-                    });
-            }
-        }
-    </script>
 </body>
 </html>
