@@ -4,10 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="16509979-aa88-48c9-8ed5-e174001064a2" name="Changes" comment="tilføjet PUT og DELETE">
+    <list default="true" id="16509979-aa88-48c9-8ed5-e174001064a2" name="Changes" comment="tilføjet ID til GET">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/instance/danseskole.db" beforeDir="false" afterPath="$PROJECT_DIR$/instance/danseskole.db" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes.py" beforeDir="false" afterPath="$PROJECT_DIR$/routes.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/index.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -76,7 +75,8 @@
       <workItem from="1729504981510" duration="5316000" />
       <workItem from="1729582234356" duration="3003000" />
       <workItem from="1729585306393" duration="11755000" />
-      <workItem from="1729668715900" duration="11824000" />
+      <workItem from="1729668715900" duration="12829000" />
+      <workItem from="1729754346030" duration="292000" />
     </task>
     <task id="LOCAL-00001" summary="init">
       <option name="closed" value="true" />
@@ -214,7 +214,15 @@
       <option name="project" value="LOCAL" />
       <updated>1729686174695</updated>
     </task>
-    <option name="localTasksCounter" value="18" />
+    <task id="LOCAL-00018" summary="tilføjet ID til GET">
+      <option name="closed" value="true" />
+      <created>1729689196909</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1729689196909</updated>
+    </task>
+    <option name="localTasksCounter" value="19" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -232,7 +240,8 @@
     <MESSAGE value="siden kører igen" />
     <MESSAGE value="postman test POST og GET!" />
     <MESSAGE value="tilføjet PUT og DELETE" />
-    <option name="LAST_COMMIT_MESSAGE" value="tilføjet PUT og DELETE" />
+    <MESSAGE value="tilføjet ID til GET" />
+    <option name="LAST_COMMIT_MESSAGE" value="tilføjet ID til GET" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/danseskole01$routes.coverage" NAME="routes Coverage Results" MODIFIED="1729688418279" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
