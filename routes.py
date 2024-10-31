@@ -1,5 +1,5 @@
 from flask import render_template, request, redirect, url_for
-from models import Elev, db
+from models import Elev, db, Dansehold, Danselektion, attendance
 
 def register_routes(app, db):
     @app.route('/', )
@@ -66,3 +66,21 @@ def register_routes(app, db):
                 return {"message": "Elev slettet"}, 200
             return {"message": "Elev ikke fundet og ikke slettet"}, 400
         return render_template('elev.html')
+
+    @app.route('/dansehold')
+    def dansehold():
+        dansehold_liste = Dansehold.query.all() #Henter alle dansehold fra databasen
+        return render_template('dansehold.html', dansehold_liste=dansehold_liste)
+
+    @app.route('/opret_dansehold', methods=["GET", "POST"])
+    def opret_dansehold():
+        if request.method =="POST":
+            stilart = request.form.get('stilart')
+            instruktor = request.form.get('instruktor')
+            lokation_id = request.form.get('lokation_id')
+            nyt_dansehold = Dansehold(stilart=stilart, instruktor=instruktor, lokation_id=lokation_id)
+
+            db.session.add(nyt_dansehold)
+            db.session.commit()
+            return redirect(url_for('dansehold'))
+        return render_template('dansehold.html')

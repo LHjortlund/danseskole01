@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Dansehold</title>
+    <link rel="stylesheet" href="../static/css/style.css">
+</head>
+<body>
+
+    <h2>Opret Dansehold</h2>
+    <form action="/opret_dansehold" method="post">
+        Stilart: <input type="text" name="stilart" placeholder="Stilart">
+        Instruktor: <input type="text" name="instruktor" placeholder="instruktor">
+        Lokation ID: <input type="number" name="lokation_id">
+        <input type="submit" value="Opret Dansehold">
+    </form>
+
+    <h2>Liste over Dansehold</h2>
+        <ul>
+            {% for dh in dansehold_liste %}
+            <li>
+                {{ dh.stilart }} - {{ dh.instruktor }}
+                <a href="/opdater/{{ dh.id }}">Opdater</a>
+                <button onclick="sletDansehold({{ dh.id }})">Slet</button>
+            </li>
+            {% endfor %}
+        </ul>
+
+    <script>
+        function sletDansehold(danseholdID) {
+            fetch(`/slet_dansehold/${danseholdId}`, {
+                method: 'DELETE'
+            }).then(response => response.json()).then(data => {
+                alert(data.message);
+                location.reload();
+            }).catch(error => console.error('Fejl:', error));
+        }
+    </script>
+
+
+</body>
+</html>
