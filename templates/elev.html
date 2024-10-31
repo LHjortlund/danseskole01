@@ -9,14 +9,39 @@
     <link rel="stylesheet" href="../static/css/style.css">
 </head>
 <body>
-    <h1>Elev liste</h1>
+
+    <h2>Opret Elev</h2>
+    <form action="/opret_elev" method="post">
+      Navn: <input type="text" name="navn" placeholder="Fuld navn">
+      Fødselsdato: <input type="text" name="fodselsdato" placeholder="fodselsdato dd/mm/20xx">
+      <input type="submit" value="Opret Elev">
+    </form>
+
+     <h2>Elevliste</h2>
     <ul>
         {% for elev in elever %}
         <li>
-            {{ elev.navn }} - {{ elev.fodselsdato }}
+            {{ elev.navn }} {{ elev.fodselsdato }})
+            - <button onclick="sletElev({{ elev.id }})">Slet</button>
+            - <a href="/opdater_elev/{{ elev.id }}">Opdater</a>
         </li>
         {% endfor %}
     </ul>
+
+    <script>
+    function sletElev(elevId) {
+        console.log("Slet elev med ID:", elevId); // Debugging
+        fetch(`/slet_elev/${elevId}`, {
+            method: 'DELETE'
+        })
+        .then(response => response.json())
+        .then(data => {
+            alert(data.message);
+            location.reload(); // Opdaterer siden efter sletning
+        })
+        .catch(error => console.error('Fejl ved sletning:', error));
+    }
+</script>
 
 </body>
 </html>

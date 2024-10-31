@@ -4,8 +4,7 @@ from models import Elev, db
 def register_routes(app, db):
     @app.route('/', )
     def index():
-        elever = Elev.query.all()
-        return render_template('index.html', elever=elever)
+        return render_template('index.html')
 
     @app.route('/elev')
     def elev():
@@ -23,8 +22,8 @@ def register_routes(app, db):
             ny_elev = Elev(navn=navn, fodselsdato=fodselsdato)
             db.session.add(ny_elev)
             db.session.commit()
-            return redirect(url_for('index'))
-        return render_template('index.html')
+            return redirect(url_for('elev'))
+        return render_template('elev.html')
 
     @app.route('/elever', methods=["GET"])
     def get_elever():
@@ -49,7 +48,7 @@ def register_routes(app, db):
                 db.session.commit()
                 return {"message": "Elev opdateret"}, 200
             return {"message": "Elev ikke fundet"}, 400
-        return render_template('index.html')
+        return render_template('elev.html')
 
     @app.route('/slet_elev/<int:elev_id>', methods=["DELETE"])
     def slet_elev(elev_id):
@@ -66,4 +65,4 @@ def register_routes(app, db):
                 db.session.commit()
                 return {"message": "Elev slettet"}, 200
             return {"message": "Elev ikke fundet og ikke slettet"}, 400
-        return render_template('index.html')
+        return render_template('elev.html')
