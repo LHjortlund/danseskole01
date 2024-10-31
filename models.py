@@ -34,7 +34,7 @@ class Dansehold(db.Model):
     __tablename__ = 'dansehold'
     id = db.Column(db.Integer, primary_key=True)
     stilart = db.Column(db.String(50), nullable=False) #fx Disco, Showdance
-    instruktør = db.Column(db.String(100))
+    instruktor = db.Column(db.String(100))
     lokation_id = db.Column(db.Integer, db.ForeignKey('lokation.id'))
     lokation = db.relationship('Lokation')
 

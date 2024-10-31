@@ -1,7 +1,7 @@
 from flask_restful import Resource, Api, reqparse
 from typing_extensions import no_type_check
 
-from models import Elev, db
+from models import Elev, db, Dansehold, Danselektion, attendance
 
 def register_api(app):
     api = Api(app)
@@ -55,3 +55,63 @@ def register_api(app):
             return {"message": "Elev slettet"}, 200
 
     api.add_resource(ElevResource, '/api/elever', '/api/elever/<int:elev_id>')
+
+    class DanseholdResource(Resource):
+        def get(self, dansehold_id=None):
+            if dansehold_id:
+                dansehold = Dansehold.query.get(dansehold_id)
+                if dansehold:
+                    return {"id":dansehold.id,
+                            "stilart":dansehold.stilart,
+                            "instruktor":dansehold.instruktor,
+                            "lokation":dansehold.lokation.navn
+                            }, 200
+                return {"message": "Dansehold ikke fundet"}, 404
+            dansehold_liste = Dansehold.query.all()
+            return [{"id":dh.id,
+                     "stilart":dh.stilart,
+                     "instruktor":dh.instruktor} for dh in dansehold_liste], 200
+
+        def post(self):
+            parser = reqparse.RequestParser()
+            parser.add_argument('stilart', required=True)
+            parser.add_argument('instruktor', required=False)
+            parser.add_argument('lokation_id', required=True)
+            args = parser.parse_args()
+
+            nyt_dansehold = Dansehold(stilart=args['stilart'],
+                                      instruktor=args('instruktor'),
+                                      lokation_id=args['lokation_id'])
+
+            db.session.add(nyt_dansehold)
+            db.session.commit()
+            return {"message": "Dansehold oprettet", "id": nyt_dansehold.id}, 201
+
+        def put(self, dansehold_id):
+            dansehold = Dansehold.query.get(dansehold_id)
+            if not dansehold:
+                return {"message": "Dansehold ikke fundet"}, 404
+
+            parser = reqparse.RequestParser()
+            parser.add_argument('stilart', required=False)
+            parser.add_argument('instruktor', required=False)
+            args = parser.parse_args()
+
+            if args['stilart']:
+                dansehold.stilart = args['stilart']
+            if args['instruktor']:
+                dansehold.instruktor = args['instruktor']
+            db.session.commit()
+
+            return {"message": "Dansehold opdateret"}, 200
+
+        def delete(self, dansehold_id):
+            dansehold = Dansehold.query.get(dansehold_id)
+            if not dansehold:
+                return {"message": "Dansehold ikke fundet"}, 404
+
+            db.session.delete(dansehold)
+            db.session.commit()
+            return {"message": "Dansehold slettet"}, 200
+
+    api.add_resource(DanseholdResource, '/api/dansehold', '/api/dansehold/<int:dansehold_id>')
