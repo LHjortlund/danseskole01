@@ -18,7 +18,7 @@ class Elev(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     navn = db.Column(db.String(100), nullable=False)
     fodselsdato = db.Column(db.String(10), nullable=False)
-    lokation_id = db.column(db.Integer, db.ForeignKey('lokation.id'))
+    lokation_id = db.Column(db.Integer, db.ForeignKey('lokation.id'))
     lokation = db.relationship('Lokation')
 
     def __repr__(self):
@@ -44,5 +44,5 @@ class Danselektion(db.Model):
     dato = db.Column(db.Date, nullable=False) #fx en given dato
     dansehold_id = db.Column(db.Integer, db.ForeignKey('dansehold.id'))
     dansehold = db.relationship('Dansehold')
-    attendance = db.relationsship('Elev', secondary='attendance', backref='danselektioner') #Fremmøde for hver elev
+    attendance = db.relationship('Elev', secondary='attendance', backref='danselektioner') #Fremmøde for hver elev
 
