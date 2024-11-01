@@ -4,10 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="16509979-aa88-48c9-8ed5-e174001064a2" name="Changes" comment="base.html">
-      <change afterPath="$PROJECT_DIR$/templates/navbar.html" afterDir="false" />
+    <list default="true" id="16509979-aa88-48c9-8ed5-e174001064a2" name="Changes" comment="tilføjet base og navbar-html">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/base.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/elev.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/elev.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/index.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -87,7 +88,7 @@
       <workItem from="1729754346030" duration="18532000" />
       <workItem from="1730207952963" duration="16521000" />
       <workItem from="1730380255645" duration="1780000" />
-      <workItem from="1730454542532" duration="1594000" />
+      <workItem from="1730454542532" duration="1706000" />
     </task>
     <task id="LOCAL-00001" summary="init">
       <option name="closed" value="true" />
@@ -337,7 +338,15 @@
       <option name="project" value="LOCAL" />
       <updated>1730455388363</updated>
     </task>
-    <option name="localTasksCounter" value="32" />
+    <task id="LOCAL-00032" summary="tilføjet base og navbar-html">
+      <option name="closed" value="true" />
+      <created>1730460166687</created>
+      <option name="number" value="00032" />
+      <option name="presentableId" value="LOCAL-00032" />
+      <option name="project" value="LOCAL" />
+      <updated>1730460166687</updated>
+    </task>
+    <option name="localTasksCounter" value="33" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -378,7 +387,8 @@
     <MESSAGE value="api.py tilføjet dansehold" />
     <MESSAGE value="opdater dansehold.html" />
     <MESSAGE value="base.html" />
-    <option name="LAST_COMMIT_MESSAGE" value="base.html" />
+    <MESSAGE value="tilføjet base og navbar-html" />
+    <option name="LAST_COMMIT_MESSAGE" value="tilføjet base og navbar-html" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/danseskole01$routes.coverage" NAME="routes Coverage Results" MODIFIED="1729688418279" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />

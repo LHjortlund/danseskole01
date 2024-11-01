@@ -1,49 +1,7 @@
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Danseskole</title>
-       <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css" rel="stylesheet"
-    integrity="sha384-aFq/bzH65dt+w6FI2ooMVUpc+21e0SRygnTpmBvdBgSdnuTN7QbdgL+OapgHtvPp" crossorigin="anonymous">
+{% extends "base.html" %}
 
-        <link rel="stylesheet" href="../static/css/style.css">
+{% block title %}Danseskole - Hjem{% endblock %}
 
-    <style>.feature-icon {
-      width: 4rem;
-      height: 4rem;
-      border-radius: .75rem;}
-    </style>
-
-</head>
-<body>
-<!--NAV BAR/HEADER-->
-    <div class="container" class="gradient-background">
-    <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
-      <div class="col-md-3 mb-2 mb-md-0">
-        <a href="/" class="d-inline-flex link-body-emphasis text-decoration-none">
-          <img loading="lazy" role="presentation" data-scalestrategy="crop" style="margin-top:-4.217999999999989px;margin-left:0px;display:block;margin:0" src="https://impro.usercontent.one/appid/oneComWsb/domain/dctdans.dk/media/dctdans.dk/onewebmedia/Logo%20sort%20skrift.png?etag=%22c178f-6061a1bc%22&amp;sourceContentType=image%2Fpng&amp;ignoreAspectRatio&amp;resize=150%2B146&amp;extract=0%2B4%2B150%2B131" srcset="https://impro.usercontent.one/appid/oneComWsb/domain/dctdans.dk/media/dctdans.dk/onewebmedia/Logo%20sort%20skrift.png?etag=%22c178f-6061a1bc%22&amp;sourceContentType=image%2Fpng&amp;ignoreAspectRatio&amp;resize=150%2B146&amp;extract=0%2B4%2B150%2B131, https://impro.usercontent.one/appid/oneComWsb/domain/dctdans.dk/media/dctdans.dk/onewebmedia/Logo%20sort%20skrift.png?etag=%22c178f-6061a1bc%22&amp;sourceContentType=image%2Fpng&amp;ignoreAspectRatio&amp;resize=300%2B293&amp;extract=0%2B8%2B300%2B262 2x, https://impro.usercontent.one/appid/oneComWsb/domain/dctdans.dk/media/dctdans.dk/onewebmedia/Logo%20sort%20skrift.png?etag=%22c178f-6061a1bc%22&amp;sourceContentType=image%2Fpng&amp;ignoreAspectRatio&amp;resize=450%2B439&amp;extract=0%2B12%2B450%2B393 3x" height="131" width="150" data-width="150" data-height="131">
-        </a>
-      </div>
-
-      <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
-        <li><a href="#" class="nav-link px-2 link-secondary">Hjem</a></li>
-        <li><a href="/elev" class="nav-link px-2">Elev</a></li>
-        <li><a href="/dansehold" class="nav-link px-2">Dansehold</a></li>
-        <li><a href="#" class="nav-link px-2">Prøvetime</a></li>
-
-      </ul>
-
-      <div class="col-md-3 text-end">
-        <button type="button" class="btn btn-outline-primary me-2">Login</button>
-        <button type="button" class="btn btn-primary">Sign-up</button>
-      </div>
-    </header>
-  </div>
-
-    <h1>Velkommen til danseskolen DCT</h1>
-
-</body>
-</html>
+{% block content %}
+<h1>Velkommen til danseskolen DCT</h1>
+{% endblock %}
