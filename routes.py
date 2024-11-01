@@ -84,3 +84,35 @@ def register_routes(app, db):
             db.session.commit()
             return redirect(url_for('dansehold'))
         return render_template('dansehold.html')
+
+    @app.route('/danseholdene', methods=["GET"])
+    def get_danseholdene():
+        danseholdene = Dansehold.query.all() #modelname er 'Dansehold'
+        dansehold_liste = [{"id": dansehold.id,
+                            "stilart": dansehold.stilart,
+                            "instruktor": dansehold.instruktor,
+                            "lokation_id": dansehold.lokation_id.navn}
+                           for dansehold in danseholdene]
+        return {"danseholdene": dansehold_liste}, 200
+
+    @app.route('/opdater_dansehold/<int:dansehold_id>', methods=["GET", "PUT"])
+    def opdater_dansehold(dansehold_id):
+        if request.method == "GET":
+            dansehold = Dansehold.query.all(dansehold_id)
+            if dansehold:
+                return render_template('opdater_dansehold.html', dansehold=dansehold)
+            return "Dansehold ikke fundet", 404
+
+        if request.method == "PUT":
+            data = request.get_json()
+            dansehold = Dansehold.query.get(dansehold_id)
+            if dansehold:
+                dansehold.stilart = data.get("stilart", dansehold.stilart)
+                dansehold.instruktor = data.get("instruktor", dansehold.instruktor)
+                dansehold.lokation_id = data.get("lokation_id", dansehold.lokation_id)
+                db.session.commit()
+                return {"message": "Dansehold opdateret"}, 200
+            return {"message": "Dansehold ikke fundet"}, 400
+        return render_template('dansehold.html')
+
+

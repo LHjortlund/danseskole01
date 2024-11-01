@@ -1,14 +1,8 @@
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Dansehold</title>
-    <link rel="stylesheet" href="../static/css/style.css">
-</head>
-<body>
+{% extends "base.html" %}
+
+{% block title %}Danseskole - Elev{% endblock %}
+
+{% block content %}
 
     <h2>Opret Dansehold</h2>
     <form action="/opret_dansehold" method="post">
@@ -41,5 +35,4 @@
     </script>
 
 
-</body>
-</html>
+{% endblock %}

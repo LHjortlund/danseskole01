@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Opdater Dansehold</title>
+</head>
+<body>
+    <h1>Opdater {{dansehold.stilart }}</h1>
+    <form id="opdaterForm">
+        Stilart: <input type="text" id="stilart" value="{{ dansehold.stilart }}">
+        Instruktor: <input type="text" id="instruktor" value="{{ dansehold.instruktor }}">
+        Lokation ID: <input type="text" id="lokation_id" value="{{ dansehold.lokation_id }}">
+        <button type="button" onclick="opdaterDansehold({{ dansehold.id }})">Opdater Dansehold</button>
+    </form>
+
+       <script>
+        function opdaterDansehold(danseholdId) {
+            const stilart = document.getElementById('stilart').value;
+            const instruktor = document.getElementById('instruktor').value;
+            const lokation_id = document.getElementById('lokation_id').value;
+
+            fetch(`/opdater_dansehold/${danseholdId}`, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ stilart: stilart, instruktor: instruktor, lokation_id: lokation_id })
+            })
+            .then(response => response.json())
+            .then(data => {
+                alert(data.message);
+                window.location.href = "/dansehold";
+            });
+        }
+    </script>
+
+</body>
+</html>
