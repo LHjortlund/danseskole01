@@ -12,7 +12,6 @@ attendance = db.Table('attendance',
     db.Column('danselektion_id', db.Integer, db.ForeignKey('danselektion.id'))
 )
 
-
 class Elev(db.Model):
     __tablename__ = 'elev'
     id = db.Column(db.Integer, primary_key=True)
@@ -35,8 +34,12 @@ class Dansehold(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     stilart = db.Column(db.String(50), nullable=False) #fx Disco, Showdance
     instruktor = db.Column(db.String(100))
+    beskrivelse = db.Column(db.String(200))
     lokation_id = db.Column(db.Integer, db.ForeignKey('lokation.id'))
     lokation = db.relationship('Lokation')
+
+    def __repr__(self):
+        return f'Dansehold {self.stilart}'
 
 class Danselektion(db.Model):
     __tablename__ = 'danselektion'
