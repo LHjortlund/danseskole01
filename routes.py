@@ -98,7 +98,7 @@ def register_routes(app, db):
     @app.route('/opdater_dansehold/<int:dansehold_id>', methods=["GET", "PUT"])
     def opdater_dansehold(dansehold_id):
         if request.method == "GET":
-            dansehold = Dansehold.query.all(dansehold_id)
+            dansehold = Dansehold.query.get(dansehold_id)
             if dansehold:
                 return render_template('opdater_dansehold.html', dansehold=dansehold)
             return "Dansehold ikke fundet", 404

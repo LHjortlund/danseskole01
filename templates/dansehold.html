@@ -14,13 +14,12 @@
 
     <h2>Liste over Dansehold</h2>
         <ul>
-            {% for dh in dansehold_liste %}
+            {% for dansehold in dansehold_liste %}
             <li>
                 {{ dansehold.stilart }} - {{ dansehold.instruktor }}
-                <a href="/opdater/{{ dansehold.id }}">Opdater</a>
+                <a href="/opdater_dansehold/{{ dansehold.id }}">Opdater</a>
                 <button onclick="sletDansehold({{ dansehold.id }})">Slet</button>
                 <a href="/opdater_dansehold/{{ dansehold.id }}">Opdater</a>
-
             </li>
             {% endfor %}
         </ul>
