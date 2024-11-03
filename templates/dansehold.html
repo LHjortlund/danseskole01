@@ -16,9 +16,11 @@
         <ul>
             {% for dh in dansehold_liste %}
             <li>
-                {{ dh.stilart }} - {{ dh.instruktor }}
-                <a href="/opdater/{{ dh.id }}">Opdater</a>
-                <button onclick="sletDansehold({{ dh.id }})">Slet</button>
+                {{ dansehold.stilart }} - {{ dansehold.instruktor }}
+                <a href="/opdater/{{ dansehold.id }}">Opdater</a>
+                <button onclick="sletDansehold({{ dansehold.id }})">Slet</button>
+                <a href="/opdater_dansehold/{{ dansehold.id }}">Opdater</a>
+
             </li>
             {% endfor %}
         </ul>

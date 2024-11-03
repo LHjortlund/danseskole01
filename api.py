@@ -68,9 +68,9 @@ def register_api(app):
                             }, 200
                 return {"message": "Dansehold ikke fundet"}, 404
             dansehold_liste = Dansehold.query.all()
-            return [{"id":dh.id,
-                     "stilart":dh.stilart,
-                     "instruktor":dh.instruktor} for dh in dansehold_liste], 200
+            return [{"id":dansehold.id,
+                     "stilart":dansehold.stilart,
+                     "instruktor":dansehold.instruktor} for dh in dansehold_liste], 200
 
         def post(self):
             parser = reqparse.RequestParser()
