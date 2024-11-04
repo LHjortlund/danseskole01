@@ -25,14 +25,19 @@
 
     <script>
         function sletDansehold(danseholdID) {
-            fetch(`/slet_dansehold/${danseholdId}`, {
-                method: 'DELETE'
-            }).then(response => response.json()).then(data => {
-                alert(data.message);
-                location.reload();
-            }).catch(error => console.error('Fejl:', error));
+            const bekræftelse = confirm("Er du sikker på, at du vil slette dette dansehold?")
+            if (bekræftelse) {
+                fetch(`/slet_dansehold/${danseholdID}`, {
+                    method: 'DELETE'
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        alert(data.message);
+                        location.reload(); // Opdaterer siden efter sletning
+                    })
+                    .catch(error => console.error('Fejl:', error));
+            }
         }
     </script>
-
 
 {% endblock %}

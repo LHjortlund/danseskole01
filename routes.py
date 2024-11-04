@@ -115,4 +115,26 @@ def register_routes(app, db):
             return {"message": "Dansehold ikke fundet"}, 400
         return render_template('dansehold.html')
 
+    @app.route('/slet_dansehold/<int:dansehold_id>', methods=["DELETE"])
+    def slet_dansehold(dansehold_id):
+        dansehold = Dansehold.query.get(dansehold_id)
+        if dansehold:
+            db.session.delete(dansehold)
+            db.session.commit()
+            return {"message": "Dansehold slettet"}, 200
+        return {"message": "Dansehold blev ikke fundet og ikke slettet"}, 400
+
+
+    @app.route('/prøvetime')
+    def prøvetime():
+        prøvetime_liste = Prøvetime.query.all()
+        return render_template('prøvetime.html', prøvetime_liste=prøvetime_liste)
+
+    @app.route('/opret_prøvetime', methods=["GET", "POST"])
+    def opret_prøvetime():
+        if request.method == "POST":
+
+
+
+
 

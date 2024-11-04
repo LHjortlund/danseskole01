@@ -49,3 +49,10 @@ class Danselektion(db.Model):
     dansehold = db.relationship('Dansehold')
     attendance = db.relationship('Elev', secondary='attendance', backref='danselektioner') #Fremmøde for hver elev
 
+class Prøvetime(db.Model):
+    __tablename__ = 'prøvetime'
+    id = db.Column(db.Integer, primary_key=True)
+    dato = db.Column(db.Date, nullable=False)
+    prøvetime_id = db.Column(db.Integer, db.ForeignKey('prøvetime.id'))
+    prøvetime = db.relationship('Prøvetime')
+    attendance = db.relationship('Elev', secondary='attendance')
