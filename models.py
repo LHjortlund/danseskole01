@@ -45,7 +45,18 @@ class Danselektion(db.Model):
     __tablename__ = 'danselektion'
     id = db.Column(db.Integer, primary_key=True)
     dato = db.Column(db.Date, nullable=False) #fx en given dato
-    dansehold_id = db.Column(db.Integer, db.ForeignKey('dansehold.id'))
+    tidspunkt = db.Column(db.Time, nullable=False) # tidspunkt for danselektion
+    dansehold_id = db.Column(db.Integer, db.ForeignKey('dansehold.id')) #tilknytning til danselektioner
     dansehold = db.relationship('Dansehold')
+    lokation_id = db.Column(db.Integer, db.ForeignKey('lokation.id')) #tilknytning til lokation
+    lokation = db.relationship('Lokation')
+    instruktor_id = db.Column(db.Integer, db.ForeignKey('instruktor.id'))  # Instruktør
+    instruktor = db.relationship('Instruktor')  # Instruktør for lektionen
     attendance = db.relationship('Elev', secondary='attendance', backref='danselektioner') #Fremmøde for hver elev
 
+# class prøvetime(db.Model):
+#     __tablename__ = 'prøvetime'
+#     id = db.Column(db.Integer, primary_key=True)
+#     dato = db.Column(db.Date, nullable=False)
+#     prøvetime_id = db.Column(db.Integer, db.ForeignKey('prøvetime.id'))
+#     attendance = db.relationship('Elev', secondary='attendance')

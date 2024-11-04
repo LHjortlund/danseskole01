@@ -1,0 +1,10 @@
+<h2>Fremmøde for {{ lektion.dato }} - {{ lektion.tidspunkt }}</h2>
+<form method="POST">
+    {% for elev in elever %}
+    <div>
+        <label>{{ elev.navn }}</label>
+        <input type="checkbox" name="elev_id" value="{{ elev.id }}">
+    </div>
+    {% endfor %}
+    <button type="submit">Registrer Fremmøde</button>
+</form>

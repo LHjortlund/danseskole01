@@ -124,6 +124,27 @@ def register_routes(app, db):
             return {"message": "Dansehold slettet"}, 200
         return {"message": "Dansehold blev ikke fundet og ikke slettet"}, 400
 
+    @app.route('/danselektion/<int:lektion_id>', methods=["GET", "POST"])
+    def registrer_fremmøde(lektion_id):
+        lektion = Danselektion.query.get(lektion_id)
+        if request.method == "POST":
+            elev_ids = request.form.getlist('elev_id')
+            for elev_id in elev_ids:
+                db.session.query(attendance).filter_by(elev_id=elev_id, danselektion_id=lektion.id).update(
+                    {"mødt_op": True})
+            db.session.commit()
+            return redirect(url_for('dansehold'))  # Tilbage til dansehold efter opdatering
+        elever = lektion.attendance
+        return render_template('fremmøde.html', elever=elever, lektion=lektion)
+
+    # @app.route('/prøvetime')
+    # def prøvetime():
+    #     prøvetime_liste = Prøvetime.query.all()
+    #     return render_template('prøvetime.html', prøvetime_liste=prøvetime_liste)
+    #
+    # @app.route('/opret_prøvetime', methods=["GET", "POST"])
+    # def opret_prøvetime():
+    #     if request.method == "POST":
 
 
 
