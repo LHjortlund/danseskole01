@@ -1,7 +1,7 @@
 from flask_restful import Resource, Api, reqparse
 from typing_extensions import no_type_check
 
-from models import Elev, db, Dansehold, Danselektion, attendance
+from models import Elev, db, Dansehold, Danselektion, attendance, Instruktor
 
 def register_api(app):
     api = Api(app)
@@ -55,6 +55,16 @@ def register_api(app):
             return {"message": "Elev slettet"}, 200
 
     api.add_resource(ElevResource, '/api/elever', '/api/elever/<int:elev_id>')
+
+    class InstruktorResource(Resource):
+        def get(self, instruktor_id=None):
+            if instruktor_id:
+                instruktor = Instruktor.query.get(instruktor_id)
+                if instruktor:
+                    return {"id": instruktor.id, "navn": instruktor.navn, "email": instruktor.email}, 200
+                return {"message": "Instruktor ikke fundet"}, 404
+            instruktors = Instruktor.query.all()
+            return [{"id": i.id, "navn": i.navn, "email": i.email} for i in instruktors], 200
 
     class DanseholdResource(Resource):
         def get(self, dansehold_id=None):

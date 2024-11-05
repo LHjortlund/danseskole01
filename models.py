@@ -12,6 +12,7 @@ attendance = db.Table('attendance',
     db.Column('danselektion_id', db.Integer, db.ForeignKey('danselektion.id'))
 )
 
+
 class Elev(db.Model):
     __tablename__ = 'elev'
     id = db.Column(db.Integer, primary_key=True)
@@ -28,6 +29,17 @@ class Lokation(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     navn = db.Column(db.String(100), nullable=False) #fx stenløse el. hvidovre
     #optional: adresse eller andet relevant info
+
+
+class Instruktor(db.Model):
+    __tablename__ = 'instruktor'
+    id = db.Column(db.Integer, primary_key=True)
+    navn = db.Column(db.String(100), nullable=False)
+    email = db.Column(db.String(100), unique=True, nullable=False)
+    telefon = db.Column(db.String(100))
+
+    def __str__(self):
+        return f'Instruktor {self.navn}'
 
 class Dansehold(db.Model):
     __tablename__ = 'dansehold'
