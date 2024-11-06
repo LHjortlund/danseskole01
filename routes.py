@@ -70,7 +70,9 @@ def register_routes(app, db):
     @app.route('/dansehold')
     def dansehold():
         dansehold_liste = Dansehold.query.all() #Henter alle dansehold fra databasen
-        return render_template('dansehold.html', dansehold_liste=dansehold_liste)
+        lektioner = Danselektion.query.all() #henter alle danselektioner
+        elever = Elev.query.all() #Tilføj elevliste
+        return render_template('dansehold.html', dansehold_liste=dansehold_liste, lektioner=lektioner, elever=elever)
 
     @app.route('/opret_dansehold', methods=["GET", "POST"])
     def opret_dansehold():
@@ -124,18 +126,15 @@ def register_routes(app, db):
             return {"message": "Dansehold slettet"}, 200
         return {"message": "Dansehold blev ikke fundet og ikke slettet"}, 400
 
-    @app.route('/danselektion/<int:lektion_id>', methods=["GET", "POST"])
-    def registrer_fremmøde(lektion_id):
+    @app.route('/tilfoej_elev_til_lektion/<int:lektion_id>/<int:elev_id>', methods=["POST"])
+    def tilfoej_elev_til_lektion(lektion_id, elev_id):
+        elev = Elev.query.get(elev_id)
         lektion = Danselektion.query.get(lektion_id)
-        if request.method == "POST":
-            elev_ids = request.form.getlist('elev_id')
-            for elev_id in elev_ids:
-                db.session.query(attendance).filter_by(elev_id=elev_id, danselektion_id=lektion.id).update(
-                    {"mødt_op": True})
+        if elev and lektion:
+            lektion.attendance.append(elev)
             db.session.commit()
-            return redirect(url_for('dansehold'))  # Tilbage til dansehold efter opdatering
-        elever = lektion.attendance
-        return render_template('fremmøde.html', elever=elever, lektion=lektion)
+            return {"message": "Elev tilføjet til lektion"}, 200
+        return {"message": "Elev eller lektion ikke fundet"}, 400
 
     # @app.route('/prøvetime')
     # def prøvetime():
