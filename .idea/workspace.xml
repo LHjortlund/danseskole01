@@ -4,10 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="16509979-aa88-48c9-8ed5-e174001064a2" name="Changes" comment="Tester fremmøde af elever">
+    <list default="true" id="16509979-aa88-48c9-8ed5-e174001064a2" name="Changes" comment="fejl. tester">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes.py" beforeDir="false" afterPath="$PROJECT_DIR$/routes.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/dansehold.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/dansehold.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -91,7 +89,7 @@
       <workItem from="1730454542532" duration="7571000" />
       <workItem from="1730640483078" duration="4650000" />
       <workItem from="1730706242114" duration="11453000" />
-      <workItem from="1730893739503" duration="704000" />
+      <workItem from="1730893739503" duration="1643000" />
     </task>
     <task id="LOCAL-00001" summary="init">
       <option name="closed" value="true" />
@@ -421,7 +419,15 @@
       <option name="project" value="LOCAL" />
       <updated>1730814916783</updated>
     </task>
-    <option name="localTasksCounter" value="42" />
+    <task id="LOCAL-00042" summary="fejl. tester">
+      <option name="closed" value="true" />
+      <created>1730894466223</created>
+      <option name="number" value="00042" />
+      <option name="presentableId" value="LOCAL-00042" />
+      <option name="project" value="LOCAL" />
+      <updated>1730894466223</updated>
+    </task>
+    <option name="localTasksCounter" value="43" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -439,7 +445,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="ændre lidt i index" />
     <MESSAGE value="ændre i post og get" />
     <MESSAGE value="opdateret app.py men melder stadig fejl" />
     <MESSAGE value="prøver at tilføje REST API" />
@@ -464,7 +469,8 @@
     <MESSAGE value="opdater dansehold virker nu" />
     <MESSAGE value="dansehold afsluttet" />
     <MESSAGE value="Tester fremmøde af elever" />
-    <option name="LAST_COMMIT_MESSAGE" value="Tester fremmøde af elever" />
+    <MESSAGE value="fejl. tester" />
+    <option name="LAST_COMMIT_MESSAGE" value="fejl. tester" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
