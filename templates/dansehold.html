@@ -40,6 +40,7 @@
         }
     </script>
 
+    {% for lektion in lektioner %}
     <form action="/tilfoej_elev_til_lektion/{{ lektion.id }}" method="post">
     <select name="elev_id">
         {% for elev in elever %}
@@ -47,6 +48,7 @@
         {% endfor %}
     </select>
     <button type="submit">Tilføj elev</button>
-</form>
+    </form>
+    {% endfor %}
 
 {% endblock %}
