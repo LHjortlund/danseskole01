@@ -128,17 +128,22 @@ def register_routes(app, db):
 
     @app.route('/tilfoej_elev_til_lektion/<int:lektion_id>', methods=["POST"])
     def tilfoej_elev_til_lektion(lektion_id, elev_id):
-        elev_id = request.form.get("elev_id")
-        print(f'Lektion ID: {lektion_id}, Elev ID: {elev_id}')
-        #lektion_id = request.form.get("lektion_id")
-        lektion = Danselektion.query.get(lektion_id)
-        elev = Elev.query.get(elev_id)
+        try:
+            elev_id = request.form.get("elev_id")
+            #print(f'Lektion ID: {lektion_id}, Elev ID: {elev_id}')
+            #lektion_id = request.form.get("lektion_id")
+            lektion = Danselektion.query.get(lektion_id)
+            elev = Elev.query.get(elev_id)
 
-        if elev and lektion:
-            lektion.attendance.append(elev)
-            db.session.commit()
-            return {"message": "Elev tilføjet til lektion"}, 200
-        return {"message": "Elev eller lektion ikke fundet"}, 400
+            if elev and lektion:
+                lektion.attendance.append(elev)
+                db.session.commit()
+                return {"message": "Elev tilføjet til lektion"}, 200
+            return {"message": "Elev eller lektion ikke fundet"}, 400
+        except Exception as e:
+            db.session.rollback()
+            print(f"Fejl: {e}")
+            return {"message": "Der opstod en fejl"}, 500
 
     # @app.route('/prøvetime')
     # def prøvetime():

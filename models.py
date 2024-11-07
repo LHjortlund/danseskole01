@@ -60,6 +60,8 @@ class Danselektion(db.Model):
     tidspunkt = db.Column(db.Time, nullable=False) # tidspunkt for danselektion
     dansehold_id = db.Column(db.Integer, db.ForeignKey('dansehold.id')) #tilknytning til danselektioner
     dansehold = db.relationship('Dansehold')
+    elev_id = db.Column(db.Integer, db.ForeignKey('elev.id'))
+    elev = db.relationship('Elev')
     lokation_id = db.Column(db.Integer, db.ForeignKey('lokation.id')) #tilknytning til lokation
     lokation = db.relationship('Lokation')
     instruktor_id = db.Column(db.Integer, db.ForeignKey('instruktor.id'))  # Instruktør

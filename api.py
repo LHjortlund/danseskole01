@@ -125,3 +125,23 @@ def register_api(app):
             return {"message": "Dansehold slettet"}, 200
 
     api.add_resource(DanseholdResource, '/api/dansehold', '/api/dansehold/<int:dansehold_id>')
+
+    class TilfoejElevTilLektionResource(Resource):
+        def post(self, lektion_id):
+            parser = reqparse.RequestParser()
+            parser.add_argument('lektion_id', required=True, help="Elev ID er påkrævet")
+            args = parser.parse_args()
+
+            elev_id = args['lektion_id']
+            elev = Elev.query.get(elev_id)
+            lektion = Danselektion.query.get(lektion_id)
+
+            if not elev or not lektion:
+                return {"message": "Elev eller lektion ikke fundet"}, 404
+
+            #tilføj elev til lektion attendace-listen
+            lektion.attendance.append(elev)
+            db.session.commit()
+            return {"message": "Elev tilføjet til danselektionen"}, 200
+
+    api.add_resource(TilfoejElevTilLektionResource, '/api/dansehold', '/tilfoej_elev_til_lektion/<int:lektion_id>')
