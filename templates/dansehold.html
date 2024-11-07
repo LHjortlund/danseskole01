@@ -40,14 +40,18 @@
         }
     </script>
 
+
+
+    <h2>Tilføj elev til danselektion</h2>
     {% for lektion in lektioner %}
     <form action="/tilfoej_elev_til_lektion/{{ lektion.id }}" method="post">
-    <select name="elev_id">
-        {% for elev in elever %}
-        <option value="{{ elev.id }}">{{ elev.navn }}</option>
-        {% endfor %}
-    </select>
-    <button type="submit">Tilføj elev</button>
+        <input type="hidden" name="lektion_id" value="{{ lektion.id }}">
+        <select name="elev_id">
+            {% for elev in elever %}
+            <option value="{{ elev.id }}">{{ elev.navn }}</option>
+            {% endfor %}
+        </select>
+        <button type="submit">Tilføj elev</button>
     </form>
     {% endfor %}
 
