@@ -130,19 +130,23 @@ def register_routes(app, db):
     def tilfoej_elev_til_lektion(lektion_id):
         print("funktionen bliver kaldt")
         try:
-            elev_id = request.form.get("elev_id")
+            elev_id = request.form["elev_id"]
             print(f'Lektion ID: {lektion_id}, Elev ID: {elev_id}')
-            lektion_id = request.form.get("lektion_id")
+            #lektion_id = request.form.get("lektion_id")
             lektion = Danselektion.query.get(lektion_id)
             elev = Elev.query.get(elev_id)
             print("Lektion fundet:", lektion)
             print("Elev fundet:", elev)
+            print("Funktion kaldt")
+            print("Lektion ID fra URL:", lektion_id)
+            print("Elev ID fra formular:", elev_id)
 
             if elev and lektion:
                 lektion.attendance.append(elev)
                 db.session.commit()
                 return {"message": "Elev tilføjet til lektion"}, 200
             return {"message": "Elev eller lektion ikke fundet"}, 400
+
         except Exception as e:
             db.session.rollback()
             print(f"Fejl: {e}")
