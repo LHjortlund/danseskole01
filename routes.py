@@ -127,13 +127,16 @@ def register_routes(app, db):
         return {"message": "Dansehold blev ikke fundet og ikke slettet"}, 400
 
     @app.route('/tilfoej_elev_til_lektion/<int:lektion_id>', methods=["POST"])
-    def tilfoej_elev_til_lektion(lektion_id, elev_id):
+    def tilfoej_elev_til_lektion(lektion_id):
+        print("funktionen bliver kaldt")
         try:
             elev_id = request.form.get("elev_id")
-            #print(f'Lektion ID: {lektion_id}, Elev ID: {elev_id}')
-            #lektion_id = request.form.get("lektion_id")
+            print(f'Lektion ID: {lektion_id}, Elev ID: {elev_id}')
+            lektion_id = request.form.get("lektion_id")
             lektion = Danselektion.query.get(lektion_id)
             elev = Elev.query.get(elev_id)
+            print("Lektion fundet:", lektion)
+            print("Elev fundet:", elev)
 
             if elev and lektion:
                 lektion.attendance.append(elev)
@@ -144,6 +147,7 @@ def register_routes(app, db):
             db.session.rollback()
             print(f"Fejl: {e}")
             return {"message": "Der opstod en fejl"}, 500
+
 
     # @app.route('/prøvetime')
     # def prøvetime():
