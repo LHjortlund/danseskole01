@@ -56,7 +56,7 @@ class Dansehold(db.Model):
 class Danselektion(db.Model):
     __tablename__ = 'danselektion'
     id = db.Column(db.Integer, primary_key=True)
-    dato = db.Column(db.Date, nullable=False) #fx en given dato
+    dato = db.Column(db.String, nullable=False) #fx en given dato
     tidspunkt = db.Column(db.Time, nullable=False) # tidspunkt for danselektion
     dansehold_id = db.Column(db.Integer, db.ForeignKey('dansehold.id')) #tilknytning til danselektioner
     dansehold = db.relationship('Dansehold')
@@ -68,6 +68,17 @@ class Danselektion(db.Model):
     instruktor = db.relationship('Instruktor')  # Instruktør for lektionen
     attendance = db.relationship('Elev', secondary='attendance', backref='danselektioner') #Fremmøde for hver elev
 
+    @property
+    def iso_dato(self):
+        print(f"Type of dato: {type(self.dato)}, Value: {self.dato}")
+        if self.dato:
+            try:
+                # Ensure dato is formatted correctly
+                return datetime.fromisoformat(str(self.dato)).isoformat()
+            except ValueError:
+                # Handle case where dato is not in ISO format
+                return None
+        return None
 # class prøvetime(db.Model):
 #     __tablename__ = 'prøvetime'
 #     id = db.Column(db.Integer, primary_key=True)
