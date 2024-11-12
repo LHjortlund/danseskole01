@@ -70,15 +70,19 @@ class Danselektion(db.Model):
 
     @property
     def iso_dato(self):
+        # Check type og værdi af dato
         print(f"Type of dato: {type(self.dato)}, Value: {self.dato}")
-        if self.dato:
+
+        if isinstance(self.dato, str):
             try:
-                # Ensure dato is formatted correctly
-                return datetime.fromisoformat(str(self.dato)).isoformat()
+                # Konverterer datoen fra string til ISO format
+                return datetime.fromisoformat(self.dato).isoformat()
             except ValueError:
-                # Handle case where dato is not in ISO format
+                print("Datoen er ikke i gyldigt ISO-format.")
                 return None
-        return None
+        else:
+            print("Dato er ikke en streng.")
+            return None
 
 
 # class prøvetime(db.Model):
