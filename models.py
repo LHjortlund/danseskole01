@@ -79,6 +79,8 @@ class Danselektion(db.Model):
                 # Handle case where dato is not in ISO format
                 return None
         return None
+
+
 # class prøvetime(db.Model):
 #     __tablename__ = 'prøvetime'
 #     id = db.Column(db.Integer, primary_key=True)
