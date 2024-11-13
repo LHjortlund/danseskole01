@@ -14,12 +14,13 @@ def register_routes(app, db):
     @app.route('/opret_elev', methods=["GET", "POST"])
     def opret_elev():
         if request.method == "POST":
-            navn = request.form.get('navn')
+            fornavn = request.form.get('fornavn')
+            efternavn = request.form.get('efternavn')
             fodselsdato = request.form.get('fodselsdato')
-            if not navn or not fodselsdato:
+            if not fornavn or not efternavn or not fodselsdato:
                 return "Fejl: Navn og fødselsdato skal udfyldes", 400
 
-            ny_elev = Elev(navn=navn, fodselsdato=fodselsdato)
+            ny_elev = Elev(fornavn=fornavn, efternavn=efternavn, fodselsdato=fodselsdato)
             db.session.add(ny_elev)
             db.session.commit()
             return redirect(url_for('elev'))
@@ -28,7 +29,7 @@ def register_routes(app, db):
     @app.route('/elever', methods=["GET"])
     def get_elever():
         elever = Elev.query.all()
-        elev_liste = [{"id": elev.id, "navn": elev.navn, "fodselsdato": elev.fodselsdato} for elev in elever]
+        elev_liste = [{"id": elev.id, "fornavn": elev.fornavn, "fodselsdato": elev.fodselsdato} for elev in elever]
         return {"elever": elev_liste}
 
     @app.route('/opdater_elev/<int:elev_id>', methods=["GET", "PUT"])
@@ -43,7 +44,8 @@ def register_routes(app, db):
             data = request.get_json()
             elev = Elev.query.get(elev_id)
             if elev:
-                elev.navn = data.get("navn", elev.navn)
+                elev.fornavn = data.get("fornavn", elev.fornavn)
+                elev.efternavn = data.get("efternavn", elev.efternavn)
                 elev.fodselsdato = data.get("fodselsdato", elev.fodselsdato)
                 db.session.commit()
                 return {"message": "Elev opdateret"}, 200
@@ -93,7 +95,7 @@ def register_routes(app, db):
         dansehold_liste = [{"id": dansehold.id,
                             "stilart": dansehold.stilart,
                             "instruktor": dansehold.instruktor,
-                            "lokation_id": dansehold.lokation_id.navn}
+                            "lokation_id": dansehold.lokation_id.fornavn}
                            for dansehold in danseholdene]
         return {"danseholdene": dansehold_liste}, 200
 

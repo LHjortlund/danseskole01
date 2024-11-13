@@ -11,10 +11,10 @@ def register_api(app):
             if elev_id:
                 elev = Elev.query.get(elev_id)
                 if elev:
-                    return {"navn": elev.navn, "fodselsdato": elev.fodselsdato}, 200
+                    return {"navn": elev.fornavn, "fodselsdato": elev.fodselsdato}, 200
                 return {"message": "Elev ikke fundet"}, 404
             elever = Elev.query.all()
-            return [{"id": elev.id, "navn": elev.navn, "fodselsdato": elev.fodselsdato} for elev in elever], 200
+            return [{"id": elev.id, "navn": elev.fornavn, "fodselsdato": elev.fodselsdato} for elev in elever], 200
 
         def post(self):
             parser = reqparse.RequestParser()
@@ -38,7 +38,7 @@ def register_api(app):
             args = parser.parse_args()
 
             if args['navn']:
-                elev.navn = args['navn']
+                elev.fornavn = args['navn']
             if args['fodselsdato']:
                 elev.fodselsdato = args['fodselsdato']
             db.session.commit()
@@ -61,10 +61,10 @@ def register_api(app):
             if instruktor_id:
                 instruktor = Instruktor.query.get(instruktor_id)
                 if instruktor:
-                    return {"id": instruktor.id, "navn": instruktor.navn, "email": instruktor.email}, 200
+                    return {"id": instruktor.id, "navn": instruktor.fornavn, "email": instruktor.email}, 200
                 return {"message": "Instruktor ikke fundet"}, 404
             instruktors = Instruktor.query.all()
-            return [{"id": i.id, "navn": i.navn, "email": i.email} for i in instruktors], 200
+            return [{"id": i.id, "navn": i.fornavn, "email": i.email} for i in instruktors], 200
 
     class DanseholdResource(Resource):
         def get(self, dansehold_id=None):
@@ -74,7 +74,7 @@ def register_api(app):
                     return {"id":dansehold.id,
                             "stilart":dansehold.stilart,
                             "instruktor":dansehold.instruktor,
-                            "lokation":dansehold.lokation.navn
+                            "lokation":dansehold.lokation.fornavn
                             }, 200
                 return {"message": "Dansehold ikke fundet"}, 404
             dansehold_liste = Dansehold.query.all()

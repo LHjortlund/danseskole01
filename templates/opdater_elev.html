@@ -9,20 +9,22 @@
 <body>
     <h1>Opdater {{ elev.navn }}</h1>
     <form id="opdaterForm">
-        Navn: <input type="text" id="navn" value="{{ elev.navn }}">
+        Navn: <input type="text" id="fornavn" value="{{ elev.fornavn }}">
+        Efternavn: <input type="text" id="efternavn" value="{{ elev.efternavn }}">
         Fødselsdato: <input type="text" id="fodselsdato" value="{{ elev.fodselsdato }}">
         <button type="button" onclick="opdaterElev({{ elev.id }})">Opdater Elev</button>
     </form>
 
     <script>
         function opdaterElev(elevId) {
-            const navn = document.getElementById('navn').value;
+            const fornavn = document.getElementById('fornavn').value;
+            const efternavn = document.getElementById('efternavn').value;
             const fodselsdato = document.getElementById('fodselsdato').value;
 
             fetch(`/opdater_elev/${elevId}`, {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ navn: navn, fodselsdato: fodselsdato })
+                body: JSON.stringify({ fornavn: fornavn, efternavn: efternavn, fodselsdato: fodselsdato })
             })
             .then(response => response.json())
             .then(data => {

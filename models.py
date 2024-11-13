@@ -16,13 +16,14 @@ attendance = db.Table('attendance',
 class Elev(db.Model):
     __tablename__ = 'elev'
     id = db.Column(db.Integer, primary_key=True)
-    navn = db.Column(db.String(100), nullable=False)
+    fornavn = db.Column(db.String(100), nullable=False)
+    efternavn = db.Column(db.String(100), nullable=False)
     fodselsdato = db.Column(db.String(10), nullable=False)
-    lokation_id = db.Column(db.Integer, db.ForeignKey('lokation.id'))
-    lokation = db.relationship('Lokation')
+    mobil = db.Column(db.Integer, nullable=False)
+
 
     def __repr__(self):
-        return f'Elev {self.navn} og {self.fodselsdato}'
+        return f'Elev {self.fornavn} og {self.fodselsdato}'
 
 class Lokation(db.Model):
     __tablename__ = 'lokation'
