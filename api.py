@@ -1,7 +1,7 @@
 from flask_restful import Resource, Api, reqparse
 from typing_extensions import no_type_check
 
-from models import Elev, db, Dansehold, Danselektion, attendance, Instruktor
+from models import db, Elev, Dansehold, hold_deltager, Stilart, Lokation, Instruktor, Registering
 
 def register_api(app):
     api = Api(app)
@@ -14,15 +14,26 @@ def register_api(app):
                     return {"navn": elev.fornavn, "fodselsdato": elev.fodselsdato}, 200
                 return {"message": "Elev ikke fundet"}, 404
             elever = Elev.query.all()
-            return [{"id": elev.id, "navn": elev.fornavn, "fodselsdato": elev.fodselsdato} for elev in elever], 200
+            return [{"id": elev.id,
+                     "fornavn": elev.fornavn,
+                     "efternavn": elev.efternavn,
+                     "fodselsdato": elev.fodselsdato,
+                     "mobil": elev.mobil}
+                    for elev in elever], 200
 
         def post(self):
             parser = reqparse.RequestParser()
-            parser.add_argument('navn', required=True)
+            parser.add_argument('fornavn', required=True)
+            parser.add_argument('efternavn', required=True)
             parser.add_argument('fodselsdato', required=True)
+            parser.add_argument('mobil', required=True)
             args = parser.parse_args()
 
-            ny_elev = Elev(navn=args['navn'], fodselsdato=args['fodselsdato'])
+            ny_elev = Elev(
+                fornavn=args['fornavn'],
+                efternavn=args['efternavn'],
+                fodselsdato=args['fodselsdato'],
+                mobil=args['mobil'])
             db.session.add(ny_elev)
             db.session.commit()
             return {"message": "Elev oprettet", "id": ny_elev.id}, 201
@@ -33,14 +44,20 @@ def register_api(app):
                 return {"message": "Elev ikke fundet"}, 404
 
             parser = reqparse.RequestParser()
-            parser.add_argument('navn', required=False)
-            parser.add_argument('fodselsdato', required=False)
+            parser.add_argument('fornavn', required=True)
+            parser.add_argument('efternavn', required=True)
+            parser.add_argument('fodselsdato', required=True)
+            parser.add_argument('mobil', required=True)
             args = parser.parse_args()
 
-            if args['navn']:
-                elev.fornavn = args['navn']
+            if args['fornavn']:
+                elev.fornavn = args['fornavn']
+            if args['efternavn']:
+                elev.efternavn = args['efternavn']
             if args['fodselsdato']:
                 elev.fodselsdato = args['fodselsdato']
+            if args['mobil']:
+                elev.mobil = args['mobil']
             db.session.commit()
 
             return {"message": "Elev opdateret"}, 200
@@ -61,10 +78,18 @@ def register_api(app):
             if instruktor_id:
                 instruktor = Instruktor.query.get(instruktor_id)
                 if instruktor:
-                    return {"id": instruktor.id, "navn": instruktor.fornavn, "email": instruktor.email}, 200
+                    return {"id": instruktor.id,
+                            "fornavn": instruktor.fornavn,
+                            "efternavn": instruktor.efternavn,
+                            "mobil": instruktor.mobil,
+                            "email": instruktor.email}, 200
                 return {"message": "Instruktor ikke fundet"}, 404
             instruktors = Instruktor.query.all()
-            return [{"id": i.id, "navn": i.fornavn, "email": i.email} for i in instruktors], 200
+            return [{"id": i.id,
+                     "fornavn": i.fornavn,
+                     "efternavn": i.efternavn,
+                     "email": i.email}
+                    for i in instruktors], 200
 
     class DanseholdResource(Resource):
         def get(self, dansehold_id=None):
@@ -72,9 +97,9 @@ def register_api(app):
                 dansehold = Dansehold.query.get(dansehold_id)
                 if dansehold:
                     return {"id":dansehold.id,
-                            "stilart":dansehold.stilart,
+                            "stilart":dansehold.stilart.stilart, #henter fra stilart
                             "instruktor":dansehold.instruktor,
-                            "lokation":dansehold.lokation.fornavn
+                            "lokation":dansehold.lokation.adresse #henter fra lokation
                             }, 200
                 return {"message": "Dansehold ikke fundet"}, 404
             dansehold_liste = Dansehold.query.all()
@@ -84,12 +109,12 @@ def register_api(app):
 
         def post(self):
             parser = reqparse.RequestParser()
-            parser.add_argument('stilart', required=True)
+            parser.add_argument('stilart_id', required=True)
             parser.add_argument('instruktor', required=False)
             parser.add_argument('lokation_id', required=True)
             args = parser.parse_args()
 
-            nyt_dansehold = Dansehold(stilart=args['stilart'],
+            nyt_dansehold = Dansehold(stilart=args['stilart_id'],
                                       instruktor=args('instruktor'),
                                       lokation_id=args['lokation_id'])
 
@@ -126,22 +151,37 @@ def register_api(app):
 
     api.add_resource(DanseholdResource, '/api/dansehold', '/api/dansehold/<int:dansehold_id>')
 
-    class TilfoejElevTilLektionResource(Resource):
-        def post(self, lektion_id):
+    class StilartResource(Resource):
+        def get(self, stilart_id=None):
+            if stilart_id:
+                stilart = Stilart.query.get(stilart_id)
+                if stilart:
+                    return {"id": stilart.id,
+                            "stilart": stilart.stilart,
+                            "beskrivelse": stilart.beskrivelse}, 200
+                return {"message": "Stilart ikke fundet"}, 404
+
+            stilarter = Stilart.query.all()
+            return [{"id": s.id,
+                     "stilart": s.stilart,
+                     "beskrivelse": s.beskrivelse} for s in stilarter], 200
+
+    api.add_resource(StilartResource, '/api/stilart', '/api/stilart/<int:stilart_id>')
+
+    class RegisteringResource(Resource):
+        def post(self):
             parser = reqparse.RequestParser()
-            parser.add_argument('lektion_id', required=True, help="Elev ID er påkrævet")
+            parser.add_argument('elev_id', required=True)
+            parser.add_argument('dansehold_id', required=True)
             args = parser.parse_args()
 
-            elev_id = args['lektion_id']
-            elev = Elev.query.get(elev_id)
-            lektion = Danselektion.query.get(lektion_id)
+            elev = Elev.query.get(args['elev_id'])
+            dansehold = Dansehold.query.get(args['dansehold_id'])
+            if not elev or not dansehold:
+                return {"message": "Elev eller dansehold ikke fundet"}, 404
 
-            if not elev or not lektion:
-                return {"message": "Elev eller lektion ikke fundet"}, 404
-
-            #tilføj elev til lektion attendace-listen
-            lektion.attendance.append(elev)
+            dansehold.elever.append(elev)
             db.session.commit()
-            return {"message": "Elev tilføjet til danselektionen"}, 200
+            return {"message": "Elev tilføjet til dansehold"}, 200
+    api.add_resource(RegisteringResource, '/api/registering')
 
-    api.add_resource(TilfoejElevTilLektionResource, '/api/dansehold', '/tilfoej_elev_til_lektion/<int:lektion_id>')

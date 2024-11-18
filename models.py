@@ -5,7 +5,6 @@ from sqlalchemy.orm import backref
 
 db = SQLAlchemy()
 
-
 # Many-to-Many tabel til at forbinde elever og dansehold (HoldDeltager)
 hold_deltager = db.Table('hold_deltager',
                          db.Column('dansehold_id', db.Integer, db.ForeignKey('dansehold.id'), primary_key=True),
@@ -34,7 +33,7 @@ class Instruktor(db.Model):
     fornavn = db.Column(db.String(100), nullable=False)
     efternavn = db.Column(db.String(100), nullable=False)
     email = db.Column(db.String(100), unique=True, nullable=False)
-    telefon = db.Column(db.String(100))
+    telefon = db.Column(db.Integer, nullable=False)
 
     def __str__(self):
         return f'Instruktor {self.fornavn}'
@@ -81,6 +80,7 @@ class Registering(db.Model):
     # Relationer til dansehold og elev
     dansehold = db.relationship('Dansehold', backref=backref('registreringer', cascade='all, delete-orphan'))
     elev = db.relationship('Elev', backref=backref('registreringer', cascade='all, delete-orphan'))
+
 # class Danselektion(db.Model):
 #     __tablename__ = 'danselektion'
 #     id = db.Column(db.Integer, primary_key=True)
