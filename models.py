@@ -24,6 +24,9 @@ class Elev(db.Model):
     #Relation til dansehold via HoldDeltager-tabellen
     dansehold = db.relationship('Dansehold', secondary=hold_deltager, back_populates="elever")
 
+    def __repr__(self):
+        return f'Elev {self.fornavn} {self.efternavn}'
+
 #Instruktor class repræsenterer en instruktør i systemet
 class Instruktor(db.Model):
     __tablename__ = 'instruktor'
@@ -33,6 +36,9 @@ class Instruktor(db.Model):
     email = db.Column(db.String(100), unique=True, nullable=False)
     telefon = db.Column(db.String(100))
 
+    def __str__(self):
+        return f'Instruktor {self.fornavn}'
+
 #Stilarr-klassen repræsenterer en dansestil i systemet
 class Stilart(db.Model):
     __tablename__ = 'stilart'
@@ -40,23 +46,41 @@ class Stilart(db.Model):
     stilart = db.Column(db.String(100), nullable=False)
     beskrivelse = db.Column(db.String(100), nullable=False)
 
-
-
-
-    def __str__(self):
-        return f'Instruktor {self.fornavn}'
+class Lokation(db.Model):
+    __tablename__ = 'lokation'
+    id = db.Column(db.Integer, primary_key=True)
+    adresse = db.Column(db.String(100), nullable=False)
 
 class Dansehold(db.Model):
     __tablename__ = 'dansehold'
     id = db.Column(db.Integer, primary_key=True)
-    stilart = db.Column(db.String(50), nullable=False) #fx Disco, Showdance
-    instruktor = db.Column(db.String(100))
-    lokation_id = db.Column(db.Integer, db.ForeignKey('lokation.id'))
-    lokation = db.relationship('Lokation')
+    startdato = db.Column(db.Date, nullable=False)
+    antal_gange = db.Column(db.Integer, nullable=False)
+    tidspunkt = db.Column(db.Time, nullable=False)
+    lokation = db.Column(db.String(100), nullable=False)
+    beskrivelse = db.Column(db.String(255), nullable=True)
 
-    def __repr__(self):
-        return f'Dansehold {self.stilart}'
+    instruktor_id = db.Column(db.Integer, db.ForeignKey('instruktor.id'), nullable=False)
+    stilart_id = db.Column(db.Integer, db.ForeignKey('stilart.id'), nullable=False)
 
+    # Relationer
+    instruktor = db.relationship('Instruktor', backref='dansehold')
+    stilart = db.relationship('Stilart', backref='dansehold')
+    elever = db.relationship('Elev', secondary=hold_deltager, back_populates="dansehold")
+
+
+# Registering-klassen repræsenterer en registrering af en elevs deltagelse på en specifik dato
+class Registering(db.Model):
+    __tablename__ = 'registering'
+    id = db.Column(db.Integer, primary_key=True)
+    dato = db.Column(db.Date, nullable=False)
+
+    dansehold_id = db.Column(db.Integer, db.ForeignKey('dansehold.id'), nullable=False)
+    elev_id = db.Column(db.Integer, db.ForeignKey('elev.id'), nullable=False)
+
+    # Relationer til dansehold og elev
+    dansehold = db.relationship('Dansehold', backref=backref('registreringer', cascade='all, delete-orphan'))
+    elev = db.relationship('Elev', backref=backref('registreringer', cascade='all, delete-orphan'))
 # class Danselektion(db.Model):
 #     __tablename__ = 'danselektion'
 #     id = db.Column(db.Integer, primary_key=True)
