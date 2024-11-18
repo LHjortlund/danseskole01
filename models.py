@@ -6,13 +6,13 @@ from sqlalchemy.orm import backref
 db = SQLAlchemy()
 
 
-# Many-to-Many tabel til at forbinde elever og danselektioner
-attendance = db.Table('attendance',
-    db.Column('elev_id', db.Integer, db.ForeignKey('elev.id')),
-    # db.Column('danselektion_id', db.Integer, db.ForeignKey('danselektion.id'))
+# Many-to-Many tabel til at forbinde elever og dansehold (HoldDeltager)
+hold_deltager = db.Table('hold_deltager',
+                         db.Column('dansehold_id', db.Integer, db.ForeignKey('dansehold.id'), primary_key=True),
+                         db.Column('elev_id', db.Integer, db.ForeignKey('elev.id'), primary_key=True)
 )
 
-
+#Elev-klassen represents en elev in the system
 class Elev(db.Model):
     __tablename__ = 'elev'
     id = db.Column(db.Integer, primary_key=True)
@@ -21,23 +21,10 @@ class Elev(db.Model):
     fodselsdato = db.Column(db.String(10), nullable=False)
     mobil = db.Column(db.Integer, nullable=False)
 
+    #Relation til dansehold via HoldDeltager-tabellen
+    dansehold = db.relationship('Dansehold', secondary=hold_deltager, back_populates="elever")
 
-    def __repr__(self):
-        return f'Elev {self.fornavn} og {self.fodselsdato}'
-
-class Lokation(db.Model):
-    __tablename__ = 'lokation'
-    id = db.Column(db.Integer, primary_key=True)
-    adresse = db.Column(db.String(100), nullable=False) #fx stenløse el. hvidovre
-    #optional: adresse eller andet relevant info
-
-class Stilart(db.Model):
-    __tablename__ = 'stilart'
-    id = db.Column(db.Integer, primary_key=True)
-    stilart = db.Column(db.String(100), nullable=False)
-    beskrivelse = db.Column(db.String(100), nullable=False)
-
-
+#Instruktor class repræsenterer en instruktør i systemet
 class Instruktor(db.Model):
     __tablename__ = 'instruktor'
     id = db.Column(db.Integer, primary_key=True)
@@ -45,6 +32,16 @@ class Instruktor(db.Model):
     efternavn = db.Column(db.String(100), nullable=False)
     email = db.Column(db.String(100), unique=True, nullable=False)
     telefon = db.Column(db.String(100))
+
+#Stilarr-klassen repræsenterer en dansestil i systemet
+class Stilart(db.Model):
+    __tablename__ = 'stilart'
+    id = db.Column(db.Integer, primary_key=True)
+    stilart = db.Column(db.String(100), nullable=False)
+    beskrivelse = db.Column(db.String(100), nullable=False)
+
+
+
 
     def __str__(self):
         return f'Instruktor {self.fornavn}'
