@@ -4,10 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="16509979-aa88-48c9-8ed5-e174001064a2" name="Changes" comment="ændringer i db">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/models.py" afterDir="false" />
-    </list>
+    <list default="true" id="16509979-aa88-48c9-8ed5-e174001064a2" name="Changes" comment="opdateret models.py" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -115,15 +112,7 @@
       <workItem from="1731504509121" duration="2450000" />
       <workItem from="1731578856529" duration="3642000" />
       <workItem from="1731670573431" duration="3543000" />
-      <workItem from="1731927806129" duration="1388000" />
-    </task>
-    <task id="LOCAL-00007" summary="prøver opret elev">
-      <option name="closed" value="true" />
-      <created>1729599154540</created>
-      <option name="number" value="00007" />
-      <option name="presentableId" value="LOCAL-00007" />
-      <option name="project" value="LOCAL" />
-      <updated>1729599154541</updated>
+      <workItem from="1731927806129" duration="1475000" />
     </task>
     <task id="LOCAL-00008" summary="ændre lidt i index">
       <option name="closed" value="true" />
@@ -509,7 +498,15 @@
       <option name="project" value="LOCAL" />
       <updated>1731506232637</updated>
     </task>
-    <option name="localTasksCounter" value="56" />
+    <task id="LOCAL-00056" summary="opdateret models.py">
+      <option name="closed" value="true" />
+      <created>1731929230451</created>
+      <option name="number" value="00056" />
+      <option name="presentableId" value="LOCAL-00056" />
+      <option name="project" value="LOCAL" />
+      <updated>1731929230453</updated>
+    </task>
+    <option name="localTasksCounter" value="57" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -527,7 +524,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Delete fungerer nu" />
     <MESSAGE value="database updse" />
     <MESSAGE value="opdateret nav-bar" />
     <MESSAGE value="opdaterer rute for opdater_elev.html" />
@@ -552,7 +548,8 @@
     <MESSAGE value="perhaps problem solved" />
     <MESSAGE value="ændringer i Elev-db" />
     <MESSAGE value="ændringer i db" />
-    <option name="LAST_COMMIT_MESSAGE" value="ændringer i db" />
+    <MESSAGE value="opdateret models.py" />
+    <option name="LAST_COMMIT_MESSAGE" value="opdateret models.py" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/danseskole01$routes.coverage" NAME="routes Coverage Results" MODIFIED="1731065484042" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
