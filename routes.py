@@ -1,5 +1,5 @@
 from flask import render_template, request, redirect, url_for
-from models import Elev, db, Dansehold, hold_deltager, Stilart, Registering, Lokation
+from models import db, Elev, Dansehold, hold_deltager, Stilart, Lokation, Instruktor, Registering
 
 def register_routes(app, db):
     @app.route('/', )
@@ -17,10 +17,12 @@ def register_routes(app, db):
             fornavn = request.form.get('fornavn')
             efternavn = request.form.get('efternavn')
             fodselsdato = request.form.get('fodselsdato')
-            if not fornavn or not efternavn or not fodselsdato:
-                return "Fejl: Navn og fødselsdato skal udfyldes", 400
+            mobil = request.form.get('mobil')
 
-            ny_elev = Elev(fornavn=fornavn, efternavn=efternavn, fodselsdato=fodselsdato)
+            if not fornavn or not efternavn or not fodselsdato or not mobil:
+                return "Fejl: Alle felter skal udfyldes", 400
+
+            ny_elev = Elev(fornavn=fornavn, efternavn=efternavn, fodselsdato=fodselsdato, mobil=mobil)
             db.session.add(ny_elev)
             db.session.commit()
             return redirect(url_for('elev'))
@@ -29,7 +31,11 @@ def register_routes(app, db):
     @app.route('/elever', methods=["GET"])
     def get_elever():
         elever = Elev.query.all()
-        elev_liste = [{"id": elev.id, "fornavn": elev.fornavn, "fodselsdato": elev.fodselsdato} for elev in elever]
+        elev_liste = [{"id": elev.id,
+                       "fornavn": elev.fornavn,
+                       "efternavn": elev.efternavn,
+                       "fodselsdato": elev.fodselsdato,
+                       "mobil": elev.mobil} for elev in elever]
         return {"elever": elev_liste}
 
     @app.route('/opdater_elev/<int:elev_id>', methods=["GET", "PUT"])
@@ -47,6 +53,7 @@ def register_routes(app, db):
                 elev.fornavn = data.get("fornavn", elev.fornavn)
                 elev.efternavn = data.get("efternavn", elev.efternavn)
                 elev.fodselsdato = data.get("fodselsdato", elev.fodselsdato)
+                elev.mobil = data.get("mobil", elev.mobil)
                 db.session.commit()
                 return {"message": "Elev opdateret"}, 200
             return {"message": "Elev ikke fundet"}, 400
@@ -69,12 +76,11 @@ def register_routes(app, db):
             return {"message": "Elev ikke fundet og ikke slettet"}, 400
         return render_template('elev.html')
 
-    # @app.route('/dansehold')
-    # def dansehold():
-    #     dansehold_liste = Dansehold.query.all() #Henter alle dansehold fra databasen
-    #     lektioner = Danselektion.query.all() #henter alle danselektioner
-    #     elever = Elev.query.all() #Tilføj elevliste
-    #     return render_template('dansehold.html', dansehold_liste=dansehold_liste, lektioner=lektioner, elever=elever)
+    @app.route('/dansehold')
+    def dansehold():
+        dansehold_liste = Dansehold.query.all() #Henter alle dansehold fra databasen
+        elever = Elev.query.all() #Tilføj elevliste
+        return render_template('dansehold.html', dansehold_liste=dansehold_liste, elever=elever)
 
     @app.route('/opret_dansehold', methods=["GET", "POST"])
     def opret_dansehold():

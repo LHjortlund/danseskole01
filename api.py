@@ -44,10 +44,10 @@ def register_api(app):
                 return {"message": "Elev ikke fundet"}, 404
 
             parser = reqparse.RequestParser()
-            parser.add_argument('fornavn', required=True)
-            parser.add_argument('efternavn', required=True)
-            parser.add_argument('fodselsdato', required=True)
-            parser.add_argument('mobil', required=True)
+            parser.add_argument('fornavn', required=False)
+            parser.add_argument('efternavn', required=False)
+            parser.add_argument('fodselsdato', required=False)
+            parser.add_argument('mobil', required=False)
             args = parser.parse_args()
 
             if args['fornavn']:
@@ -104,7 +104,7 @@ def register_api(app):
                 return {"message": "Dansehold ikke fundet"}, 404
             dansehold_liste = Dansehold.query.all()
             return [{"id":dansehold.id,
-                     "stilart":dansehold.stilart,
+                     "stilart":dansehold.stilart.stilart, #relateret felt
                      "instruktor":dansehold.instruktor} for dh in dansehold_liste], 200
 
         def post(self):
@@ -180,8 +180,10 @@ def register_api(app):
             if not elev or not dansehold:
                 return {"message": "Elev eller dansehold ikke fundet"}, 404
 
-            dansehold.elever.append(elev)
+            dansehold.registerings.append(Registering(elev_id=args['elev_id'], dansehold_id=args['dansehold_id']))
             db.session.commit()
             return {"message": "Elev tilføjet til dansehold"}, 200
+
+
     api.add_resource(RegisteringResource, '/api/registering')
 
