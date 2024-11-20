@@ -119,7 +119,8 @@ def register_routes(app, db):
             startdato = request.form.get('startdato')
             antal_gange = request.form.get('antal_gange')
             tidspunkt = request.form.get('tidspunkt')
-            lokation = request.form.get('lokation')
+            lokation_id = request.form.get('lokation_id')
+
             beskrivelse = request.form.get('beskrivelse')
             instruktor_id = request.form.get('instruktor_id')
             stilart_id = request.form.get('stilart_id')
@@ -133,7 +134,7 @@ def register_routes(app, db):
                 startdato=startdato,
                 antal_gange=antal_gange,
                 tidspunkt=tidspunkt,
-                lokation=lokation,
+                lokation=Lokation.query.get(lokation_id).adresse, #henter adresse for lokation
                 beskrivelse=beskrivelse,
                 instruktor_id=instruktor_id,
                 stilart_id=stilart_id)
@@ -146,10 +147,11 @@ def register_routes(app, db):
         stilarter = Stilart.query.all()
         instruktorer = Instruktor.query.all()
         lokationer = Lokation.query.all()
+        print(lokationer) #til debugging: Læg mærke til om listen er tom
         return render_template('dansehold.html',
                                stilarter=stilarter,
                                instruktor=instruktorer,
-                               lokation=lokationer)
+                               lokationer=lokationer)
 
     @app.route('/danseholdene', methods=["GET"])
     def get_danseholdene():

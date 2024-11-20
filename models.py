@@ -56,7 +56,7 @@ class Dansehold(db.Model):
     startdato = db.Column(db.Date, nullable=False)
     antal_gange = db.Column(db.Integer, nullable=False)
     tidspunkt = db.Column(db.Time, nullable=False)
-    lokation = db.Column(db.String(100), nullable=False)
+    lokation_id = db.Column(db.String(100), nullable=False)
     beskrivelse = db.Column(db.String(255), nullable=True)
 
     instruktor_id = db.Column(db.Integer, db.ForeignKey('instruktor.id'), nullable=False)
@@ -65,6 +65,7 @@ class Dansehold(db.Model):
     # Relationer
     instruktor = db.relationship('Instruktor', backref='dansehold')
     stilart = db.relationship('Stilart', backref='dansehold')
+    lokation = db.relationship('Lokation', backref='dansehold')
     elever = db.relationship('Elev', secondary=hold_deltager, back_populates="dansehold")
 
 
