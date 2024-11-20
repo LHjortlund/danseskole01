@@ -105,29 +105,51 @@ def register_routes(app, db):
     @app.route('/dansehold')
     def dansehold():
         dansehold_liste = Dansehold.query.all() #Henter alle dansehold fra databasen
+        instruktorer = Instruktor.query.all() #Henter alle instruktører
         elever = Elev.query.all() #Tilføj elevliste
-        return render_template('dansehold.html', dansehold_liste=dansehold_liste, elever=elever)
+        return render_template('dansehold.html',
+                               dansehold_liste=dansehold_liste,
+                               elever=elever,
+                               instruktorer=instruktorer,
+                               Lokation=Lokation)
 
     @app.route('/opret_dansehold', methods=["GET", "POST"])
     def opret_dansehold():
         if request.method =="POST":
-            stilart_id = request.form.get('stilart_id')
+            startdato = request.form.get('startdato')
+            antal_gange = request.form.get('antal_gange')
+            tidspunkt = request.form.get('tidspunkt')
+            lokation = request.form.get('lokation')
+            beskrivelse = request.form.get('beskrivelse')
             instruktor_id = request.form.get('instruktor_id')
-            lokation_id = request.form.get('lokation_id')
+            stilart_id = request.form.get('stilart_id')
 
-            if not stilart_id or not lokation_id:
-                return "Fejl: Stilart og lokation skal udfyldes", 400
+            # Validering og tjek for manglende input
+            if not startdato or not antal_gange or not tidspunkt or not lokation or not instruktor_id or not stilart_id:
+                return "Fejl: Alle felter skal udfyldes", 400
 
+            # Opret dansehold
             nyt_dansehold = Dansehold(
-                stilart_id=stilart_id, instruktor_id=instruktor_id, lokation_id=lokation_id)
+                startdato=startdato,
+                antal_gange=antal_gange,
+                tidspunkt=tidspunkt,
+                lokation=lokation,
+                beskrivelse=beskrivelse,
+                instruktor_id=instruktor_id,
+                stilart_id=stilart_id)
 
             db.session.add(nyt_dansehold)
             db.session.commit()
             return redirect(url_for('dansehold'))
+
+        #Hent data til dropdowns
         stilarter = Stilart.query.all()
         instruktorer = Instruktor.query.all()
         lokationer = Lokation.query.all()
-        return render_template('dansehold.html', stilarter=stilarter, instruktor=instruktorer, lokation=lokationer)
+        return render_template('dansehold.html',
+                               stilarter=stilarter,
+                               instruktor=instruktorer,
+                               lokation=lokationer)
 
     @app.route('/danseholdene', methods=["GET"])
     def get_danseholdene():

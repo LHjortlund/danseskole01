@@ -6,6 +6,11 @@
 
     <h2>Opret Dansehold</h2>
     <form action="/opret_dansehold" method="post">
+        Startdato: <input type="date" name="startdato" required><br>
+        Antal gange: <input type="number" name="antal_gange" required><br>
+        Tidspunkt: <input type="time" name="tidspunkt" required><br>
+        Beskrivelse: <textarea name="beskrivelse"></textarea><br>
+
         Stilart: <input type="text" name="stilart" placeholder="Stilart fx. Disco">
 
         Instruktør:
@@ -15,10 +20,10 @@
             {% endfor %}
         </select>
 
-        <label for="lokation_id">Vælg lokation:</label>
-        <select name="lokation_id" id="lokation_id">
+        Lokation:
+        <select name="lokation_id">
             {% for lokation in lokationer %}
-                <option value="{{ lokation.id }}">{{ lokation.adresse }}</option>
+            <option value="{{ lokation.id }}">{{ lokation.adresse }}</option>
             {% endfor %}
         </select>
 
