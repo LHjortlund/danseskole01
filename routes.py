@@ -85,14 +85,20 @@ def register_routes(app, db):
     @app.route('/opret_dansehold', methods=["GET", "POST"])
     def opret_dansehold():
         if request.method =="POST":
-            stilart = request.form.get('stilart')
-            instruktor = request.form.get('instruktor')
+            stilart_id = request.form.get('stilart_id')
+            instruktor_id = request.form.get('instruktor_id')
             lokation_id = request.form.get('lokation_id')
-            nyt_dansehold = Dansehold(stilart=stilart, instruktor=instruktor, lokation_id=lokation_id)
+
+            if not stilart_id or not lokation_id:
+                return "Fejl: Stilart og lokation skal udfyldes", 400
+
+            nyt_dansehold = Dansehold(
+                stilart_id=stilart_id, instruktor_id=instruktor_id, lokation_id=lokation_id)
 
             db.session.add(nyt_dansehold)
             db.session.commit()
             return redirect(url_for('dansehold'))
+        stilarter = Stil
         return render_template('dansehold.html')
 
     @app.route('/danseholdene', methods=["GET"])

@@ -4,9 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="16509979-aa88-48c9-8ed5-e174001064a2" name="Changes" comment="Api.py opdateret jvf models.py">
+    <list default="true" id="16509979-aa88-48c9-8ed5-e174001064a2" name="Changes" comment="ændringer i routes.py">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api.py" beforeDir="false" afterPath="$PROJECT_DIR$/api.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/routes.py" beforeDir="false" afterPath="$PROJECT_DIR$/routes.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -117,15 +116,7 @@
       <workItem from="1731578856529" duration="3642000" />
       <workItem from="1731670573431" duration="3543000" />
       <workItem from="1731927806129" duration="2050000" />
-      <workItem from="1731930267988" duration="7567000" />
-    </task>
-    <task id="LOCAL-00011" summary="ændre i post og get">
-      <option name="closed" value="true" />
-      <created>1729601614072</created>
-      <option name="number" value="00011" />
-      <option name="presentableId" value="LOCAL-00011" />
-      <option name="project" value="LOCAL" />
-      <updated>1729601614072</updated>
+      <workItem from="1731930267988" duration="8508000" />
     </task>
     <task id="LOCAL-00012" summary="opdateret app.py men melder stadig fejl">
       <option name="closed" value="true" />
@@ -511,7 +502,15 @@
       <option name="project" value="LOCAL" />
       <updated>1731933114430</updated>
     </task>
-    <option name="localTasksCounter" value="60" />
+    <task id="LOCAL-00060" summary="ændringer i routes.py">
+      <option name="closed" value="true" />
+      <created>1732036431483</created>
+      <option name="number" value="00060" />
+      <option name="presentableId" value="LOCAL-00060" />
+      <option name="project" value="LOCAL" />
+      <updated>1732036431483</updated>
+    </task>
+    <option name="localTasksCounter" value="61" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -529,7 +528,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="opdateret nav-bar" />
     <MESSAGE value="opdaterer rute for opdater_elev.html" />
     <MESSAGE value="opdaterer models" />
     <MESSAGE value="api.py tilføjet dansehold" />
@@ -554,7 +552,8 @@
     <MESSAGE value="ændringer i db" />
     <MESSAGE value="opdateret models.py" />
     <MESSAGE value="Api.py opdateret jvf models.py" />
-    <option name="LAST_COMMIT_MESSAGE" value="Api.py opdateret jvf models.py" />
+    <MESSAGE value="ændringer i routes.py" />
+    <option name="LAST_COMMIT_MESSAGE" value="ændringer i routes.py" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/danseskole01$routes.coverage" NAME="routes Coverage Results" MODIFIED="1731065484042" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
