@@ -6,10 +6,29 @@
 
     <h2>Opret Dansehold</h2>
     <form action="/opret_dansehold" method="post">
-        Stilart: <input type="text" name="stilart" placeholder="Stilart">
-        Instruktor: <input type="text" name="instruktor" placeholder="instruktor">
-        Lokation ID: <input type="number" name="lokation_id">
-        <input type="submit" value="Opret Dansehold">
+        <label for="stilart_id">Vælg stilart:</label>
+        <select name="stilart_id" id="stilart_id">
+            {% for stilart in stilarter %}
+                <option value="{{ stilart.id }}" >{{ stilart.stilart }}</option>
+            {% endfor %}
+        </select>
+
+        <label for="instruktor_id">Vælg instruktør</label>
+        <select name="instruktor_id" id="instruktor_id">
+            {% for instruktør in instruktører %}
+                <option value="{{ instrutør.id }}">
+                    {{ instruktør.fornavn }} {{ instruktør.efternavn }}</option>
+            {% endfor %}
+        </select>
+
+        <label for="lokation_id">Vælg lokation:</label>
+        <select name="lokation_id" id="lokation_id">
+            {% for lokation in lokationer %}
+                <option value="{{ lokation.id }}">{{ lokation.adresse }}</option>
+            {% endfor %}
+        </select>
+
+        <button type="submit">Opret dansehold</button>
     </form>
 
     <h2>Liste over Dansehold</h2>
@@ -39,21 +58,5 @@
             }
         }
     </script>
-
-
-
-    <h2>Tilføj elev til danselektion</h2>
-    {% for lektion in lektioner %}
-        <p>Lektion ID: {{ lektion.id }}</p>
-        <form action="/tilfoej_elev_til_lektion/{{ lektion.id }}" method="post">
-    <input type="hidden" name="lektion_id" value="{{ lektion.id }}">
-    <select name="elev_id">
-        {% for elev in elever %}
-            <option value="{{ elev.id }}">{{ elev.navn }} (ID: {{ elev.id }})</option>
-        {% endfor %}
-    </select>
-        <button type="submit">Tilføj elev</button>
-        </form>
-    {% endfor %}
 
 {% endblock %}
