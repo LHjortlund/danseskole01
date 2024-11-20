@@ -7,19 +7,11 @@
     <h2>Opret Dansehold</h2>
     <form action="/opret_dansehold" method="post">
         Stilart: <input type="text" name="stilart" placeholder="Stilart fx. Disco">
-        Instruktør: <input type="text" name>
-        <label for="stilart_id">Vælg stilart:</label>
-        <select name="stilart_id" id="stilart_id">
-            {% for stilart in stilarter %}
-                <option value="{{ stilart.id }}" >{{ stilart.stilart }}</option>
-            {% endfor %}
-        </select>
 
-        <label for="instruktor_id">Vælg instruktør</label>
-        <select name="instruktor_id" id="instruktor_id">
-            {% for instruktør in instruktører %}
-                <option value="{{ instruktør.id }}">
-                    {{ instruktør.fornavn }} {{ instruktør.efternavn }}</option>
+        Instruktør:
+        <select name="instruktor_id">
+            {% for instruktor in instruktorer %}
+            <option value="{{ instruktor.id }}">{{ instruktor.fornavn }} {{ instruktor.efternavn }}</option>
             {% endfor %}
         </select>
 

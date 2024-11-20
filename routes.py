@@ -76,6 +76,32 @@ def register_routes(app, db):
             return {"message": "Elev ikke fundet og ikke slettet"}, 400
         return render_template('elev.html')
 
+    @app.route('/instruktor')
+    def instruktor():
+        instruktorer = Instruktor.query.all()
+        return render_template('instruktor.html', instruktorer=instruktorer)
+
+    @app.route('/opret_instruktor', methods=["POST"])
+    def opret_instruktor():
+        fornavn = request.form.get('fornavn')
+        efternavn = request.form.get('efternavn')
+        email = request.form.get('email')
+        telefon = request.form.get('telefon')
+
+        ny_instruktor = Instruktor(fornavn=fornavn, efternavn=efternavn, email=email, telefon=telefon)
+        db.session.add(ny_instruktor)
+        db.session.commit()
+        return redirect(url_for('instruktor'))
+
+    @app.route('/slet_instruktor/<int:instruktor_id>', methods=["DELETE"])
+    def slet_instruktor(instruktor_id):
+        instruktor = Instruktor.query.get(instruktor_id)
+        if instruktor:
+            db.session.delete(instruktor)
+            db.session.commit()
+            return {"message": "Instruktør slettet"}, 200
+        return {"message": "Instruktør ikke fundet"}, 404
+
     @app.route('/dansehold')
     def dansehold():
         dansehold_liste = Dansehold.query.all() #Henter alle dansehold fra databasen
