@@ -98,8 +98,10 @@ def register_routes(app, db):
             db.session.add(nyt_dansehold)
             db.session.commit()
             return redirect(url_for('dansehold'))
-        stilarter = Stil
-        return render_template('dansehold.html')
+        stilarter = Stilart.query.all()
+        instruktorer = Instruktor.query.all()
+        lokationer = Lokation.query.all()
+        return render_template('dansehold.html', stilarter=stilarter, instruktor=instruktorer, lokation=lokationer)
 
     @app.route('/danseholdene', methods=["GET"])
     def get_danseholdene():
@@ -139,6 +141,22 @@ def register_routes(app, db):
             db.session.commit()
             return {"message": "Dansehold slettet"}, 200
         return {"message": "Dansehold blev ikke fundet og ikke slettet"}, 400
+
+    @app.route('registrer_elev', methods=["POST"])
+    def registrer_elev():
+        elev_id = request.form.get('elev_id')
+        dansehold_id = request.form.get('dansehold_id')
+
+        elev = Elev.query.get(elev_id)
+        dansehold = Dansehold.query.get(dansehold_id)
+
+        if not elev or not dansehold:
+            return "Fejl: Elev eller dansehold ikke fundet", 404
+
+        registrering = Registering(elev_id=elev.id, dansehold_id=dansehold.id)
+        db.session.add(registrering)
+        db.session.commit()
+        return redirect(url_for('dansehold'))
 
     # @app.route('/tilfoej_elev_til_lektion/<int:lektion_id>', methods=["POST"])
     # def tilfoej_elev_til_lektion(lektion_id):
