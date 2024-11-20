@@ -16,7 +16,7 @@
         <label for="instruktor_id">Vælg instruktør</label>
         <select name="instruktor_id" id="instruktor_id">
             {% for instruktør in instruktører %}
-                <option value="{{ instrutør.id }}">
+                <option value="{{ instruktør.id }}">
                     {{ instruktør.fornavn }} {{ instruktør.efternavn }}</option>
             {% endfor %}
         </select>

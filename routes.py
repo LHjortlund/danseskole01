@@ -142,7 +142,7 @@ def register_routes(app, db):
             return {"message": "Dansehold slettet"}, 200
         return {"message": "Dansehold blev ikke fundet og ikke slettet"}, 400
 
-    @app.route('registrer_elev', methods=["POST"])
+    @app.route('/registrer_elev', methods=["POST"])
     def registrer_elev():
         elev_id = request.form.get('elev_id')
         dansehold_id = request.form.get('dansehold_id')

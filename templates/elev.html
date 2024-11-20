@@ -9,6 +9,7 @@
       Fornavn: <input type="text" name="fornavn" placeholder="Fornavn">
       Efternavn: <input type="text" name="efternavn" placeholder="Efternavn">
         Fødselsdato: <input type="text" name="fodselsdato" placeholder="fodselsdato dd/mm/20xx">
+        Mobil: <input type="text" name="mobil" placeholder="12345678">
       <input type="submit" value="Opret Elev">
     </form>
 
@@ -16,7 +17,7 @@
     <ul>
         {% for elev in elever %}
         <li>
-            {{ elev.navn }} {{ elev.fodselsdato }})
+            {{ elev.fornavn }} {{ elev.efternavn }}, {{ elev.fodselsdato }}, {{ elev.mobil }}
             - <button onclick="sletElev({{ elev.id }})">Slet</button>
             - <a href="/opdater_elev/{{ elev.id }}">Opdater</a>
         </li>
