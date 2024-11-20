@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block title %}Danseskole - Instruktør {% endblock %}
+
+{% block content %}
+
+<h2>Opret Instruktører</h2>
+<form action="/opret_instruktor" method="post">
+    Fornavn: <input type="text" name="fornavn" placeholder="Fornavn" required>
+    Efternavn: <input type="text" name="efternavn" placeholder="Efternavn" required>
+    Email: <input type="text" name="email" placeholder="Email" required>
+    Telefon: <input type="text" name="telefon" placeholder="Telefonnummer" required>
+    <input type="submit" value="Opret Instruktør">
+</form>
+
+<h2>Instruktør Liste</h2>
+<ul>
+    {% for instruktor in instruktorer %}
+    <li>
+        {{ instruktor.fornavn }}, {{ instruktor.efternavn }}, {{ instruktor.email }}, {{ instruktor.telefon }}
+        - <button onclick="sletInstruktor({{ instruktor.id }})">Slet</button>
+    </li>
+    {% endfor %}
+</ul>
+
+<script>
+    function sletInstruktor(instruktorId) {
+        console.log("Slet Instruktør med ID:", instruktorId); //Debugging
+        fetch(`/slet_instruktor/${instruktorId}`, {
+            method: 'DELETE'
+        })
+        .then(response => response.json())
+        .then(data => {
+            alert(data.message);
+            location.reload(); //Opdaterer siden efter sletning
+        })
+            .catch(error => console.error('Fejl ved sletning:', error));
+    }
+</script>
+
+{% endblock %}

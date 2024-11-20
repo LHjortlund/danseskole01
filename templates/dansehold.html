@@ -6,6 +6,8 @@
 
     <h2>Opret Dansehold</h2>
     <form action="/opret_dansehold" method="post">
+        Stilart: <input type="text" name="stilart" placeholder="Stilart fx. Disco">
+        Instruktør: <input type="text" name>
         <label for="stilart_id">Vælg stilart:</label>
         <select name="stilart_id" id="stilart_id">
             {% for stilart in stilarter %}
