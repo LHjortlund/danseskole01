@@ -1,6 +1,6 @@
-from flask import render_template, request, redirect, url_for
+from flask import render_template, request, redirect, url_for, flash
 from models import db, Elev, Lokation, Dansehold, hold_deltager, Stilart, Instruktor, Registering
-from datetime import datetime
+from datetime import datetime, date
 
 def register_routes(app, db):
     @app.route('/', )
@@ -230,25 +230,41 @@ def register_routes(app, db):
 
     @app.route('/registrering', methods=["Get", "POST"])
     def registrer_elev():
+        dansehold = Dansehold.query.all() #Henter alle dansehold
+        elever = Elev.query.all() #Henter alle elever
+
         if request.method == "POST":
-            elev_id = request.form.get('elev_id')
             dansehold_id = request.form.get('dansehold_id')
+            elev_id = request.form.get('elev_id')
 
-            elev = Elev.query.get(elev_id)
-            dansehold = Dansehold.query.get(dansehold_id)
-
-            if not elev or not dansehold:
-                return "Fejl: Elev eller dansehold ikke fundet", 404
-
-            registrering = Registering(dato=datetime.date.today(), elev_id=elev.id, dansehold_id=dansehold.id)
-            db.session.add(registrering)
-            db.session.commit()
-            return redirect(url_for('registrer_elev'))
-
-        dansehold = Dansehold.query.all()
-        elever = Elev.query.all()
-        registreringer = Registering.query.all()
+            if not dansehold_id or not elev_id:
+                registrering = Registering(
+                    dato=date.today(),
+                    dansehold_id=dansehold_id,
+                    elev_id=elev_id)
+                db.session.add(registrering)
+                db.session.commit()
+                flash("Registrering tilføjet!", "Succes")
+            else:
+                flash("Vælg både dansehold og elev.", "danger")
         return render_template('registrering.html', dansehold=dansehold, elever=elever, registreringer=registreringer)
+
+    @app.route('/fremmøde/<int:dansehold_id>', methods=["GET", "POST"])
+    def registrer_fremmøde(dansehold_id):
+        dansehold = Dansehold.query.get_or_404(dansehold_id)
+
+        if request.method == "POST":
+            for elev in dansehold.elever:
+                dato = request.form.get(f'dato_{elev.id}')
+                fremmødt = request.form.get(f'fremmødt_{elev.id}') == "on"
+
+                if fremmødt:
+                    registrering = Registering(dato=datetime.datetime.strptime(dato, "%Y-%m-%d").date(),
+                                               elev_id=elev.id, dansehold_id=dansehold.id)
+                    db.session.add(registrering)
+                db.session.commit()
+                return redirect(url_for('registrer_fremmøde', dansehold_id=dansehold.id))
+            return render_template('fremmøde.html', dansehold=dansehold)
 
     # @app.route('/tilfoej_elev_til_lektion/<int:lektion_id>', methods=["POST"])
     # def tilfoej_elev_til_lektion(lektion_id):
