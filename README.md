@@ -11,7 +11,8 @@ Eks. på Instruktør-siden
 ![image](https://github.com/user-attachments/assets/aab2854f-2393-4c5a-af9e-b2794dae6cc9)
 
 Eks. på Dansehold-siden
-![image](https://github.com/user-attachments/assets/6098d1c8-f6f9-48b9-8647-f4739f3e094a)
+![image](https://github.com/user-attachments/assets/ebb29e4a-564c-4c5f-a172-ad23cc14de1f)
+
 
 
 
