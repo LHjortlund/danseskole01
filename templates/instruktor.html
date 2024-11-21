@@ -17,7 +17,7 @@
 <ul>
     {% for instruktor in instruktorer %}
     <li>
-        {{ instruktor.fornavn }}, {{ instruktor.efternavn }}, {{ instruktor.email }}, {{ instruktor.telefon }}
+        {{ instruktor.fornavn }} {{ instruktor.efternavn }}, {{ instruktor.email }}, {{ instruktor.telefon }}
         - <button onclick="sletInstruktor({{ instruktor.id }})">Slet</button>
     </li>
     {% endfor %}

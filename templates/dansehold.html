@@ -33,7 +33,10 @@
         <ul>
             {% for dansehold in dansehold_liste %}
             <li>
-                {{ dansehold.stilart }} - {{ dansehold.instruktor }}
+                {{ dansehold.id }} - {{ dansehold.startdato }} -
+                {{ dansehold.antal_gange }} - {{ dansehold.tidspunkt }} -
+                {{ dansehold.stilart_navn }} - {{ dansehold.instruktor }} -
+                {{ dansehold.lokation.adresse }}
                 <a href="/opdater_dansehold/{{ dansehold.id }}">Opdater</a>
                 <button onclick="sletDansehold({{ dansehold.id }})">Slet</button>
             </li>
