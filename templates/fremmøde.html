@@ -1,10 +1,24 @@
-<h2>Fremmøde for {{ lektion.dato }} - {{ lektion.tidspunkt }}</h2>
-<form method="POST">
-    {% for elev in elever %}
-    <div>
-        <label>{{ elev.navn }}</label>
-        <input type="checkbox" name="elev_id" value="{{ elev.id }}">
-    </div>
-    {% endfor %}
-    <button type="submit">Registrer Fremmøde</button>
+<h2>Fremmøde for {{ dansehold.navn }}</h2>
+<form method="POST" action="{{ url_for('registrer_fremmøde', dansehold_id=dansehold.id) }}">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Elev</th>
+                <th>Dato</th>
+                <th>Fremmødt</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for elev in dansehold.elever %}
+                <tr>
+                    <td>{{ elev.navn }}</td>
+                    <td><input type="date" name="dato_{{ elev.id }}" required></td>
+                    <td>
+                        <input type="checkbox" name="fremmødt_{{ elev.id }}">
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <button type="submit" class="btn btn-success">Registrer fremmøde</button>
 </form>

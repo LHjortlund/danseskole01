@@ -4,12 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="16509979-aa88-48c9-8ed5-e174001064a2" name="Changes" comment="dansehold.html">
-      <change afterPath="$PROJECT_DIR$/templates/registrering.html" afterDir="false" />
+    <list default="true" id="16509979-aa88-48c9-8ed5-e174001064a2" name="Changes" comment="Tilføjet registrering.html og route til registrering">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes.py" beforeDir="false" afterPath="$PROJECT_DIR$/routes.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/base.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/instruktor.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/instruktor.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/fremmøde.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/fremmøde.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -130,15 +127,7 @@
       <workItem from="1731930267988" duration="9633000" />
       <workItem from="1732087907992" duration="12124000" />
       <workItem from="1732104832730" duration="4892000" />
-      <workItem from="1732109798875" duration="18272000" />
-    </task>
-    <task id="LOCAL-00026" summary="opdaterer models">
-      <option name="closed" value="true" />
-      <created>1730362572933</created>
-      <option name="number" value="00026" />
-      <option name="presentableId" value="LOCAL-00026" />
-      <option name="project" value="LOCAL" />
-      <updated>1730362572933</updated>
+      <workItem from="1732109798875" duration="18371000" />
     </task>
     <task id="LOCAL-00027" summary="opdaterer models">
       <option name="closed" value="true" />
@@ -524,7 +513,15 @@
       <option name="project" value="LOCAL" />
       <updated>1732192789783</updated>
     </task>
-    <option name="localTasksCounter" value="75" />
+    <task id="LOCAL-00075" summary="Tilføjet registrering.html og route til registrering">
+      <option name="closed" value="true" />
+      <created>1732198951615</created>
+      <option name="number" value="00075" />
+      <option name="presentableId" value="LOCAL-00075" />
+      <option name="project" value="LOCAL" />
+      <updated>1732198951615</updated>
+    </task>
+    <option name="localTasksCounter" value="76" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -542,7 +539,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Tester fremmøde af elever" />
     <MESSAGE value="fejl. tester" />
     <MESSAGE value="Tester..." />
     <MESSAGE value="update, men ikke i mål" />
@@ -567,7 +563,8 @@
     <MESSAGE value="Nu kan der oprettes dansehold!" />
     <MESSAGE value="update update" />
     <MESSAGE value="dansehold.html" />
-    <option name="LAST_COMMIT_MESSAGE" value="dansehold.html" />
+    <MESSAGE value="Tilføjet registrering.html og route til registrering" />
+    <option name="LAST_COMMIT_MESSAGE" value="Tilføjet registrering.html og route til registrering" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/danseskole01$routes.coverage" NAME="routes Coverage Results" MODIFIED="1732109278702" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
