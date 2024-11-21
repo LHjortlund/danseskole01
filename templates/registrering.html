@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block title %}Danseskole - Registrering{% endblock %}
+
+{% block content %}
+
+  <h1>Registrering</h1>
+  <form method="POST" action="{{ url_for('registrer_elev') }}">
+            <div class="mb-3">
+                <label for="dansehold_id" class="form-label">Vælg dansehold</label>
+                <select name="dansehold_id" id="dansehold_id" class="form-select">
+                    {% for hold in dansehold %}
+                        <option value="{{ hold.id }}">{{ hold.navn }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="mb-3">
+                <label for="elev_id" class="form-label">Vælg elev</label>
+                <select name="elev_id" id="elev_id" class="form-select">
+                    {% for elev in elever %}
+                        <option value="{{ elev.id }}">{{ elev.navn }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary">Tilføj elev</button>
+        </form>
+
+        <h2 class="mt-4">Tilmeldte elever</h2>
+        <ul>
+            {% for registrering in registreringer %}
+                <li>{{ registrering.elev.navn }} - {{ registrering.dansehold.navn }}</li>
+            {% endfor %}
+        </ul>
+
+
+
+
+{% endblock %}

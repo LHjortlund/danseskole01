@@ -228,21 +228,27 @@ def register_routes(app, db):
             return {"message": "Dansehold slettet"}, 200
         return {"message": "Dansehold blev ikke fundet og ikke slettet"}, 400
 
-    @app.route('/registrer_elev', methods=["POST"])
+    @app.route('/registrering', methods=["Get", "POST"])
     def registrer_elev():
-        elev_id = request.form.get('elev_id')
-        dansehold_id = request.form.get('dansehold_id')
+        if request.method == "POST":
+            elev_id = request.form.get('elev_id')
+            dansehold_id = request.form.get('dansehold_id')
 
-        elev = Elev.query.get(elev_id)
-        dansehold = Dansehold.query.get(dansehold_id)
+            elev = Elev.query.get(elev_id)
+            dansehold = Dansehold.query.get(dansehold_id)
 
-        if not elev or not dansehold:
-            return "Fejl: Elev eller dansehold ikke fundet", 404
+            if not elev or not dansehold:
+                return "Fejl: Elev eller dansehold ikke fundet", 404
 
-        registrering = Registering(elev_id=elev.id, dansehold_id=dansehold.id)
-        db.session.add(registrering)
-        db.session.commit()
-        return redirect(url_for('dansehold'))
+            registrering = Registering(dato=datetime.date.today(), elev_id=elev.id, dansehold_id=dansehold.id)
+            db.session.add(registrering)
+            db.session.commit()
+            return redirect(url_for('registrer_elev'))
+
+        dansehold = Dansehold.query.all()
+        elever = Elev.query.all()
+        registreringer = Registering.query.all()
+        return render_template('registrering.html', dansehold=dansehold, elever=elever, registreringer=registreringer)
 
     # @app.route('/tilfoej_elev_til_lektion/<int:lektion_id>', methods=["POST"])
     # def tilfoej_elev_til_lektion(lektion_id):
