@@ -11,7 +11,8 @@ Eks. på Instruktør-siden
 ![image](https://github.com/user-attachments/assets/aab2854f-2393-4c5a-af9e-b2794dae6cc9)
 
 Eks. på Dansehold-siden
-![image](https://github.com/user-attachments/assets/5632ec76-ca91-40f8-ac17-83409aac4e8b)
+![image](https://github.com/user-attachments/assets/6098d1c8-f6f9-48b9-8647-f4739f3e094a)
+
 
 
 men der skal også være mere funktion bag, så derfor arbejder jeg kombineret tabellerne med hinanden så der er mulighed for at oprette elever og dansehold med dertilhørende, så der i sidste ende kan være en afkrydsningsfunktion.
