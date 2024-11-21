@@ -1,5 +1,5 @@
 from flask import render_template, request, redirect, url_for
-from models import db, Elev, Dansehold, hold_deltager, Stilart, Lokation, Instruktor, Registering
+from models import db, Elev, Lokation, Dansehold, hold_deltager, Stilart, Instruktor, Registering
 
 def register_routes(app, db):
     @app.route('/', )
@@ -107,11 +107,14 @@ def register_routes(app, db):
         dansehold_liste = Dansehold.query.all() #Henter alle dansehold fra databasen
         instruktorer = Instruktor.query.all() #Henter alle instruktører
         elever = Elev.query.all() #Tilføj elevliste
+        lokationer = Lokation.query.all()
+
+        print(lokationer) #Debug - Tjek om listen ikke er tom
         return render_template('dansehold.html',
                                dansehold_liste=dansehold_liste,
                                elever=elever,
                                instruktorer=instruktorer,
-                               Lokation=Lokation)
+                               lokationer=lokationer)
 
     @app.route('/opret_dansehold', methods=["GET", "POST"])
     def opret_dansehold():
@@ -119,7 +122,7 @@ def register_routes(app, db):
             startdato = request.form.get('startdato')
             antal_gange = request.form.get('antal_gange')
             tidspunkt = request.form.get('tidspunkt')
-            lokation_id = request.form.get('lokation_id')
+            lokation = request.form.get('lokation_id')
 
             beskrivelse = request.form.get('beskrivelse')
             instruktor_id = request.form.get('instruktor_id')
@@ -129,12 +132,16 @@ def register_routes(app, db):
             if not startdato or not antal_gange or not tidspunkt or not lokation or not instruktor_id or not stilart_id:
                 return "Fejl: Alle felter skal udfyldes", 400
 
+            #Validering for manglende lokation
+            if not lokation:
+                return "Fejl: Lokation ikke fundet", 400
+
             # Opret dansehold
             nyt_dansehold = Dansehold(
                 startdato=startdato,
                 antal_gange=antal_gange,
                 tidspunkt=tidspunkt,
-                lokation=Lokation.query.get(lokation_id).adresse, #henter adresse for lokation
+                lokationer=Lokation.adresse, #henter adresse for lokation
                 beskrivelse=beskrivelse,
                 instruktor_id=instruktor_id,
                 stilart_id=stilart_id)
@@ -159,7 +166,7 @@ def register_routes(app, db):
         dansehold_liste = [{"id": dansehold.id,
                             "stilart": dansehold.stilart,
                             "instruktor": dansehold.instruktor,
-                            "lokation_id": dansehold.lokation_id.fornavn}
+                            "lokation_id": dansehold.lokation_id.adresse}
                            for dansehold in danseholdene]
         return {"danseholdene": dansehold_liste}, 200
 

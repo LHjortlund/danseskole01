@@ -115,7 +115,7 @@ def register_api(app):
             args = parser.parse_args()
 
             nyt_dansehold = Dansehold(stilart=args['stilart_id'],
-                                      instruktor=args('instruktor'),
+                                      instruktor=args['instruktor'],
                                       lokation_id=args['lokation_id'])
 
             db.session.add(nyt_dansehold)
