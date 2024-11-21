@@ -1,5 +1,6 @@
 from flask import render_template, request, redirect, url_for
 from models import db, Elev, Lokation, Dansehold, hold_deltager, Stilart, Instruktor, Registering
+from datetime import datetime
 
 def register_routes(app, db):
     @app.route('/', )
@@ -118,30 +119,58 @@ def register_routes(app, db):
 
     @app.route('/opret_dansehold', methods=["GET", "POST"])
     def opret_dansehold():
-        if request.method =="POST":
+        if request.method =="POST": #hent data fra formularen
             startdato = request.form.get('startdato')
             antal_gange = request.form.get('antal_gange')
             tidspunkt = request.form.get('tidspunkt')
             lokation = request.form.get('lokation_id')
-
             beskrivelse = request.form.get('beskrivelse')
             instruktor_id = request.form.get('instruktor_id')
-            stilart_id = request.form.get('stilart_id')
+            stilart_navn = request.form.get('stilart') #Henter tekstinput for stilart
+
+            #Debug: Udskriv alle værdier
+            print(f"startdato: {startdato}, antal_gange: {antal_gange}, tidspunkt: {tidspunkt}")
+            print(f"lokation: {lokation}, instruktor_id: {instruktor_id}, stilart_navn: {stilart_navn}")
+
+
+            # Konverter strenge til date og time objekter
+            try:
+                startdato = datetime.strptime(startdato, "%Y-%m-%d").date()
+                tidspunkt = datetime.strptime(tidspunkt, "%H:%M").time()
+            except ValueError as e:
+                print(f"Fejl ved konvertering af dato/tidspunkt: {e}")
+                return "Fejl: Forkert dato- eller tidsformat", 400
 
             # Validering og tjek for manglende input
-            if not startdato or not antal_gange or not tidspunkt or not lokation or not instruktor_id or not stilart_id:
+            if (not startdato
+                    or not antal_gange
+                    or not tidspunkt
+                    or not lokation
+                    or not instruktor_id
+                    or not stilart_navn):
+                print("Fejl: Mindst ét felt er tomt!")
                 return "Fejl: Alle felter skal udfyldes", 400
 
+            #Tjek om stilart allerede finde, ellers oprettes den
+            eksisterende_stilart = Stilart.query.filter_by(stilart=stilart_navn).first()
+            if not eksisterende_stilart:
+                ny_stilart =Stilart(stilart=stilart_navn, beskrivelse="Ingen beksrivelse angivet")
+                db.session.add(ny_stilart)
+                db.session.commit()
+                stilart_id = ny_stilart.id
+            else:
+                stilart_id = eksisterende_stilart.id
+
             #Validering for manglende lokation
-            if not lokation:
-                return "Fejl: Lokation ikke fundet", 400
+            # if not lokation:
+            #     return "Fejl: Lokation ikke fundet", 400
 
             # Opret dansehold
             nyt_dansehold = Dansehold(
                 startdato=startdato,
                 antal_gange=antal_gange,
                 tidspunkt=tidspunkt,
-                lokationer=Lokation.adresse, #henter adresse for lokation
+                lokation_id=int(lokation), #henter adresse for lokation
                 beskrivelse=beskrivelse,
                 instruktor_id=instruktor_id,
                 stilart_id=stilart_id)

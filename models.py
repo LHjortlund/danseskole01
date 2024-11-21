@@ -57,7 +57,7 @@ class Dansehold(db.Model):
     antal_gange = db.Column(db.Integer, nullable=False)
     tidspunkt = db.Column(db.Time, nullable=False)
     lokation_id = db.Column(db.Integer, db.ForeignKey('lokation.id'), nullable=False)
-    beskrivelse = db.Column(db.String(255), nullable=True)
+    beskrivelse = db.Column(db.String(255), nullable=True) #Tillader tomt felt
 
     instruktor_id = db.Column(db.Integer, db.ForeignKey('instruktor.id'), nullable=False)
     stilart_id = db.Column(db.Integer, db.ForeignKey('stilart.id'), nullable=False)
