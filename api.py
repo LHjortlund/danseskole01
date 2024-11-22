@@ -187,3 +187,14 @@ def register_api(app):
 
     api.add_resource(RegisteringResource, '/api/registering')
 
+    class FremmødeResource(Resource):
+        def get(self, dansehold_id):
+            dansehold = Dansehold.query.get_or_404(dansehold_id)
+            fremmøder = [
+                {
+                    "dato": registrering.dato,
+                    "elev_id": registrering.elev_id
+                }
+                for registrering in dansehold.registreringer
+            ]
+            return fremmøder, 200

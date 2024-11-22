@@ -1,6 +1,13 @@
 from flask import render_template, request, redirect, url_for, flash
 from models import db, Elev, Lokation, Dansehold, hold_deltager, Stilart, Instruktor, Registering
-from datetime import datetime, date
+from datetime import datetime, date, timedelta
+
+# Hjælpefunktion til at generere datoer
+def generer_datoer(startdato, antal_gange):
+    datoer = []
+    for i in range(antal_gange):
+        datoer.append(startdato + timedelta(days=i*7))  # Fx hver uge
+    return datoer
 
 def register_routes(app, db):
     @app.route('/', )
@@ -238,9 +245,6 @@ def register_routes(app, db):
             dansehold_id = request.form.get('dansehold_id')
             elev_id = request.form.get('elev_id') #henter alle valgte elever (MULTIPLES)
 
-            # Tjek om elev allerede er tilmeldt danseholdet
-
-
             if not dansehold_id or not elev_id:
                 flash("Vælg både dansehold og elev.", "danger")
             else:
@@ -257,7 +261,6 @@ def register_routes(app, db):
                         db.session.add(registrering)
                     db.session.commit()
                     flash("Registrering tilføjet!", "Succes")
-
 
         registreringer = Registering.query.all()  # Henter alle registreringer
         return render_template('registrering.html',
@@ -276,55 +279,31 @@ def register_routes(app, db):
     @app.route('/fremmøde/<int:dansehold_id>', methods=["GET", "POST"])
     def registrer_fremmøde(dansehold_id):
         dansehold = Dansehold.query.get_or_404(dansehold_id)
+        datoer = generer_datoer(dansehold.startdato, dansehold.antal_gange)
 
         if request.method == "POST":
-            for elev in dansehold.elever:
-                dato = request.form.get(f'dato_{elev.id}')
-                fremmødt = request.form.get(f'fremmødt_{elev.id}') == "on"
+            for dato in datoer:
+                for elev in dansehold.elever:
+                    fremmødt = request.form.get(f'fremmødt_{elev.id}_{dato}') == "on"
 
-                if fremmødt:
-                    registrering = Registering(dato=datetime.datetime.strptime(dato, "%Y-%m-%d").date(),
-                                               elev_id=elev.id, dansehold_id=dansehold.id)
-                    db.session.add(registrering)
-                db.session.commit()
-                return redirect(url_for('registrer_fremmøde', dansehold_id=dansehold.id))
-            return render_template('fremmøde.html', dansehold=dansehold)
+                        #tilføj only registrering for fremmødte elever
+                    if fremmødt:
+                        eksisterende_fremmøde = Registering.query.filter_by(
+                            dato=dato,
+                            elev_id=elev.id,
+                            dansehold_id=dansehold.id
+                        ).first()
+                        if not eksisterende_fremmøde:
+                            registrering = Registering(
+                                dato=dato,
+                                elev_id=elev.id,
+                                dansehold_id=dansehold.id
+                            )
+                            db.session.add(registrering)
+                    db.session.commit()
+                    return redirect(url_for('registrer_fremmøde', dansehold_id=dansehold.id))
 
-    # @app.route('/tilfoej_elev_til_lektion/<int:lektion_id>', methods=["POST"])
-    # def tilfoej_elev_til_lektion(lektion_id):
-    #     print("funktionen bliver kaldt")
-    #     try:
-    #         elev_id = request.form["elev_id"]
-    #         print(f'Lektion ID: {lektion_id}, Elev ID: {elev_id}')
-    #         #lektion_id = request.form.get("lektion_id")
-    #         lektion = Danselektion.query.get(lektion_id)
-    #         elev = Elev.query.get(elev_id)
-    #         print("Lektion fundet:", lektion)
-    #         print("Elev fundet:", elev)
-    #         print("Funktion kaldt")
-    #         print("Lektion ID fra URL:", lektion_id)
-    #         print("Elev ID fra formular:", elev_id)
-    #
-    #         if elev and lektion:
-    #             lektion.attendance.append(elev)
-    #             db.session.commit()
-    #             return {"message": "Elev tilføjet til lektion"}, 200
-    #         return {"message": "Elev eller lektion ikke fundet"}, 400
-    #
-    #     except Exception as e:
-    #         db.session.rollback()
-    #         print(f"Fejl: {e}")
-    #         return {"message": "Der opstod en fejl"}, 500
-
-
-    # @app.route('/prøvetime')
-    # def prøvetime():
-    #     prøvetime_liste = Prøvetime.query.all()
-    #     return render_template('prøvetime.html', prøvetime_liste=prøvetime_liste)
-    #
-    # @app.route('/opret_prøvetime', methods=["GET", "POST"])
-    # def opret_prøvetime():
-    #     if request.method == "POST":
+                return render_template('fremmøde.html', dansehold=dansehold, datoer=datoer)
 
 
 

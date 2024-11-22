@@ -1,21 +1,30 @@
-<h2>Fremmøde for {{ dansehold.navn }}</h2>
+{% extends "base.html" %}
+
+{% block title %}Danseskole - Fremmøde{% endblock %}
+
+{% block content %}
+
+<h2>Fremmøde for {{dansehold.id }}</h2>
 <form method="POST" action="{{ url_for('registrer_fremmøde', dansehold_id=dansehold.id) }}">
     <table class="table">
         <thead>
             <tr>
                 <th>Elev</th>
-                <th>Dato</th>
+                {% for dato in datoer %}
+                     <h3>{{ dato }}</h3>
+                {% endfor %}
                 <th>Fremmødt</th>
             </tr>
         </thead>
         <tbody>
             {% for elev in dansehold.elever %}
                 <tr>
-                    <td>{{ elev.navn }}</td>
-                    <td><input type="date" name="dato_{{ elev.id }}" required></td>
-                    <td>
-                        <input type="checkbox" name="fremmødt_{{ elev.id }}">
-                    </td>
+                    <td>{{ elev.fornavn }} {{ elev.efternavn }}</td>
+                    {% for dato in datoer %}
+                        <td>
+                            <input type="checkbox" name="fremmødt_{{ elev.id }}_{{ dato }}">
+                        </td>
+                    {% endfor %}
                 </tr>
             {% endfor %}
         </tbody>
