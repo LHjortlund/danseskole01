@@ -13,6 +13,8 @@ Eks. på Instruktør-siden
 Eks. på Dansehold-siden
 ![image](https://github.com/user-attachments/assets/ebb29e4a-564c-4c5f-a172-ad23cc14de1f)
 
+EKs. på Registrerings-siden
+![image](https://github.com/user-attachments/assets/eac70e5a-ba23-43cc-ad9f-db34cd9df052)
 
 
 
