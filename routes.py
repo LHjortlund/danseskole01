@@ -247,6 +247,7 @@ def register_routes(app, db):
                 flash("Registrering tilføjet!", "Succes")
             else:
                 flash("Vælg både dansehold og elev.", "danger")
+        registreringer = Registering.query.all()  # Henter alle registreringer
         return render_template('registrering.html', dansehold=dansehold, elever=elever, registreringer=registreringer)
 
     @app.route('/fremmøde/<int:dansehold_id>', methods=["GET", "POST"])
