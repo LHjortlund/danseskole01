@@ -304,10 +304,3 @@ def register_routes(app, db):
                     return redirect(url_for('registrer_fremmøde', dansehold_id=dansehold.id))
 
                 return render_template('fremmøde.html', dansehold=dansehold, datoer=datoer)
-
-
-
-
-
-
-
