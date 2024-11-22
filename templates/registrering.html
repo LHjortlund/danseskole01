@@ -9,27 +9,48 @@
             <div class="mb-3">
                 <label for="dansehold" class="form-label">Vælg dansehold</label>
                 <select name="dansehold_id" id="dansehold" class="form-select">
-                    {% for hold in dansehold %}
-                        <option value="{{ hold.id }}">{{ hold.navn }}</option>
+                    {% for dansehold in dansehold %}
+                        <option value="{{ dansehold.id }}">{{ dansehold.id }} - Startdato: {{ dansehold.startdato }} -
+                Antal gange: {{ dansehold.antal_gange }} - Kl. {{ dansehold.tidspunkt }} -
+                {{ dansehold.stilart.stilart }} - {{ dansehold.instruktor }} -
+                {{ dansehold.lokation.adresse }}</option>
                     {% endfor %}
                 </select>
             </div>
 
             <div class="mb-3">
-                <label for="elev" class="form-label">Vælg elev</label>
-                <select name="elev_id" id="elev" class="form-select">
+                <label for="elever" class="form-label">Vælg elev</label>
+                <select name="elev_id" id="elever" class="form-select" multiple>
                     {% for elev in elever %}
-                        <option value="{{ elev.id }}">{{ elev.fornavn }} {{elev.efternanv }}</option>
+                        <option value="{{ elev.id }}">{{ elev.fornavn }} {{elev.efternavn }}</option>
                     {% endfor %}
                 </select>
             </div>
             <button type="submit" class="btn btn-primary">Tilføj elev</button>
         </form>
 
+        <br>
+
         <h2 class="mt-4">Tilmeldte elever</h2>
         <ul>
-            {% for registrering in registreringer %}
-                <li>{{ registrering.elev.fornavn }} - {{ registrering.dansehold.navn }}</li>
+            {% for dansehold in dansehold %}
+            <li>
+                <strong>{{ dansehold.id }} - Startdato: {{ dansehold.startdato }} - Antal gange: {{ dansehold.antal_gange }} - Kl. {{ dansehold.tidspunkt }} - {{ dansehold.stilart.stilart }} - Instruktor {{ dansehold.instruktor }} - {{ dansehold.lokation.adresse }}</strong>
+                <br>
+                Tilmeldte elever:
+                <ul>
+                    {% for registrering in registreringer %}
+                        {% if registrering.dansehold.id == dansehold.id %}
+                            <li>
+                                {{ registrering.elev.fornavn }} {{ registrering.elev.efternavn }}
+                                <form method="POST" action="{{ url_for('slet_registrering_elev', registrering_id=registrering.id) }}" style="display:inline;">
+                                    <button type="submit" class="btn btn-danger btn-sm">Slet</button>
+                                </form>
+                            </li>
+                        {% endif %}
+                    {% endfor %}
+                </ul>
+            </li>
             {% endfor %}
         </ul>
 

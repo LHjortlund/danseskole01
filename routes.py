@@ -228,27 +228,50 @@ def register_routes(app, db):
             return {"message": "Dansehold slettet"}, 200
         return {"message": "Dansehold blev ikke fundet og ikke slettet"}, 400
 
-    @app.route('/registrering', methods=["Get", "POST"])
+    @app.route('/registrer_elev', methods=["GET", "POST"])
     def registrer_elev():
         dansehold = Dansehold.query.all() #Henter alle dansehold
         elever = Elev.query.all() #Henter alle elever
 
+
         if request.method == "POST":
             dansehold_id = request.form.get('dansehold_id')
-            elev_id = request.form.get('elev_id')
+            elev_id = request.form.get('elev_id') #henter alle valgte elever (MULTIPLES)
+
+            # Tjek om elev allerede er tilmeldt danseholdet
+
 
             if not dansehold_id or not elev_id:
-                registrering = Registering(
-                    dato=date.today(),
-                    dansehold_id=dansehold_id,
-                    elev_id=elev_id)
-                db.session.add(registrering)
-                db.session.commit()
-                flash("Registrering tilføjet!", "Succes")
-            else:
                 flash("Vælg både dansehold og elev.", "danger")
+            else:
+                for elev_id in elev_id: #Tjek om elev allerede er tilmeldt danseholdet
+                    eksisterende_registrering = Registering.query.filter_by(
+                        dansehold_id=dansehold_id, elev_id=elev_id).first()
+                    if eksisterende_registrering:
+                        flash(f"Elev med ID {elev_id} er allerede tilmeldt danseholdet.", "warning")
+                    else:
+                        registrering = Registering(
+                            dato=date.today(),
+                            dansehold_id=dansehold_id,
+                            elev_id=elev_id)
+                        db.session.add(registrering)
+                    db.session.commit()
+                    flash("Registrering tilføjet!", "Succes")
+
+
         registreringer = Registering.query.all()  # Henter alle registreringer
-        return render_template('registrering.html', dansehold=dansehold, elever=elever, registreringer=registreringer)
+        return render_template('registrering.html',
+                               dansehold=dansehold,
+                               registreringer=registreringer,
+                               elever=elever,)
+
+    @app.route('/slet_registrering_elev/<int:registrering_id>', methods=["POST"])
+    def slet_registrering_elev(registrering_id):
+        registrering = Registering.query.get_or_404(registrering_id)
+        db.session.delete(registrering)
+        db.session.commit()
+        flash("Elev fjernet fra danseholdet.", "success")
+        return redirect(url_for('registrer_elev'))
 
     @app.route('/fremmøde/<int:dansehold_id>', methods=["GET", "POST"])
     def registrer_fremmøde(dansehold_id):

@@ -16,4 +16,6 @@ def create_app():
     register_routes(app, db)
     register_api(app)
 
+    app.secret_key = 'en_meget_hemmelig_nøgle'  # Husk at denne skal skiftes til en unik værdi.
+
     return app
