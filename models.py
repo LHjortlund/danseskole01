@@ -80,3 +80,14 @@ class Registering(db.Model):
     # Relationer til dansehold og elev
     dansehold = db.relationship('Dansehold', backref=backref('registreringer', cascade='all, delete-orphan'))
     elev = db.relationship('Elev', backref=backref('registreringer', cascade='all, delete-orphan'))
+
+#Registrering af fremmøde, gør det muligt at gemme fremmøde for hver dato, elev og dansehold
+class Fremmøde(db.Model):
+    __tablename__ = 'fremmoede'
+    id = db.Column(db.Integer, primary_key=True)
+    dato = db.Column(db.Date, nullable=False)
+    elev_id = db.Column(db.Integer, db.ForeignKey('elev.id'), nullable=False)
+    dansehold_id = db.Column(db.Integer, db.ForeignKey('dansehold.id'), nullable=False)
+
+    elev = db.relationship('Elev', backref=backref('fremmoeder', cascade='all, delete-orphan'))
+    dansehold = db.relationship('Dansehold', backref=backref('fremmoeder', cascade='all, delete-orphan'))

@@ -4,9 +4,9 @@
 
 {% block content %}
 
-<h2>Fremmøde for {{ dansehold.stilart.stilart }} - {{ dansehold.instruktor }}</h2>
-<form method="POST" action="{{ url_for('fremmøde', dansehold_id=dansehold.id) }}">
-    <table class="table">
+<h1>Fremmøde for {{ dansehold.stilart.stilart }}</h1>
+<form method="POST" action="{{ url_for('fremmoede', dansehold_id=dansehold.id) }}">
+    <table class="table table-striped">
         <thead>
             <tr>
                 <th>Elev</th>
@@ -16,12 +16,15 @@
             </tr>
         </thead>
         <tbody>
-            {% for elev in elever %}
+            {% for elev in dansehold.elever %}
                 <tr>
                     <td>{{ elev.fornavn }} {{ elev.efternavn }}</td>
                     {% for dato in datoer %}
                         <td>
-                            <input type="checkbox" name="fremmødt_{{ elev.id }}_{{ dato.strftime('%Y-%m-%d') }}">
+                            <input type="checkbox" name="fremmødt_{{ elev.id }}_{{ dato }}"
+                                   {% if fremmoede.query.filter_by(elev_id=elev.id, dansehold_id=dansehold.id, dato=dato).first() %}
+                                   checked
+                                   {% endif %}>
                         </td>
                     {% endfor %}
                 </tr>
@@ -31,4 +34,6 @@
     <button type="submit" class="btn btn-primary">Gem Fremmøde</button>
 </form>
 
+
+{% endblock %}
 

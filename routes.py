@@ -277,23 +277,24 @@ def register_routes(app, db):
         return redirect(url_for('registrer_elev'))
 
     @app.route('/fremmøde/<int:dansehold_id>', methods=["GET", "POST"])
-    def fremmøde(dansehold_id):
+    def fremmoede(dansehold_id):
         dansehold = Dansehold.query.get_or_404(dansehold_id)
-        elever = [registrering.elev for registrering in dansehold.registreringer]
-        datoer = generer_datoer(dansehold.startdato, dansehold.antal_gange)
+        datoer = [dansehold.startdato + timedelta(weeks=i) for i in range(dansehold.antal_gange)]
 
         if request.method == "POST":
             for dato in datoer:
-                for elev in elever:
-                    fremmødt = request.form.get(f'fremmødt_{elev.id}_{dato.strftime("%Y-%m-%d")}')
-                    if fremmødt:
-                        eksisterende_fremmøde = Registering.query.filter_by(
-                            dato=dato, elev_id=elev.id, dansehold_id=dansehold.id
-                        ).first()
-                        if not eksisterende_fremmøde:
-                            fremmøde_entry = Registering(dato=dato, elev_id=elev.id, dansehold_id=dansehold.id)
-                            db.session.add(fremmøde_entry)
-            db.session.commit()
-            return redirect(url_for('fremmøde', dansehold_id=dansehold.id))
+                for elev in dansehold.elever:
+                    fremmødt = request.form.get(f'fremmødt_{elev.id}_{dato}') == "on"
+                    eksisterende_fremmøde = Fremmøde.query.filter_by(dato=dato, elev_id=elev.id,
+                                                                     dansehold_id=dansehold_id).first()
 
-        return render_template('fremmøde.html', dansehold=dansehold, elever=elever, datoer=datoer)
+                    if fremmødt and not eksisterende_fremmøde:
+                        ny_fremmøde = Fremmøde(dato=dato, elev_id=elev.id, dansehold_id=dansehold_id)
+                        db.session.add(ny_fremmøde)
+                    elif not fremmødt and eksisterende_fremmøde:
+                        db.session.delete(eksisterende_fremmøde)
+
+            db.session.commit()
+            return redirect(url_for('fremmoede', dansehold_id=dansehold_id))
+
+        return render_template('fremmoede.html', dansehold=dansehold, datoer=datoer)

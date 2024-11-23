@@ -499,7 +499,7 @@
     <routine id="190" parent="1" name="fts5"/>
     <schema id="191" parent="1" name="main">
       <Current>1</Current>
-      <LastIntrospectionLocalTimestamp>2024-11-20.12:18:46</LastIntrospectionLocalTimestamp>
+      <LastIntrospectionLocalTimestamp>2024-11-23.13:01:20</LastIntrospectionLocalTimestamp>
     </schema>
     <argument id="192" parent="16">
       <ArgumentDirection>R</ArgumentDirection>
@@ -1636,24 +1636,24 @@
       <Position>4</Position>
       <StoredType>TIME|0s</StoredType>
     </column>
-    <column id="571" parent="556" name="lokation">
-      <NotNull>1</NotNull>
+    <column id="571" parent="556" name="beskrivelse">
       <Position>5</Position>
-      <StoredType>VARCHAR(100)|0s</StoredType>
-    </column>
-    <column id="572" parent="556" name="beskrivelse">
-      <Position>6</Position>
       <StoredType>VARCHAR(255)|0s</StoredType>
     </column>
-    <column id="573" parent="556" name="instruktor_id">
+    <column id="572" parent="556" name="instruktor_id">
+      <NotNull>1</NotNull>
+      <Position>6</Position>
+      <StoredType>INTEGER|0s</StoredType>
+    </column>
+    <column id="573" parent="556" name="stilart_id">
       <NotNull>1</NotNull>
       <Position>7</Position>
       <StoredType>INTEGER|0s</StoredType>
     </column>
-    <column id="574" parent="556" name="stilart_id">
+    <column id="574" parent="556" name="lokation_id">
       <NotNull>1</NotNull>
       <Position>8</Position>
-      <StoredType>INTEGER|0s</StoredType>
+      <StoredType>VARCHAR(100)|0s</StoredType>
     </column>
     <foreign-key id="575" parent="556">
       <ColNames>instruktor_id</ColNames>
