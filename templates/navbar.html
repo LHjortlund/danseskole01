@@ -2,15 +2,22 @@
 <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
     <div class="col-md-3 mb-2 mb-md-0">
         <a href="/" class="d-inline-flex link-body-emphasis text-decoration-none">
-            <img src="https://impro.usercontent.one/appid/oneComWsb/domain/dctdans.dk/media/dctdans.dk/onewebmedia/Logo%20sort%20skrift.png" alt="Logo" height="131" width="150">
+            <img src="https://impro.usercontent.one/appid/oneComWsb/domain/dctdans.dk/media/dctdans.dk/onewebmedia/Logo%20sort%20skrift.png" height="131" width="150">
         </a>
     </div>
     <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
         <li><a href="/" class="nav-link px-2 link-secondary">Hjem</a></li>
         <li><a href="/elev" class="nav-link px-2">Elev</a></li>
         <li><a href="/dansehold" class="nav-link px-2">Dansehold</a></li>
-        <li><a href="/registrering" class="nav-link px-2">Registrering</a></li>
-        <li><a href="/fremmøde" class="nav-link px-2">Fremmøde</a></li>
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Mere
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <li><a class="dropdown-item" href=registrer_elev">Registrering</a></li>
+                <li><a class="dropdown-item" href="/fremmøde">Fremmøde</a></li>
+            </ul>
+        </li>
     </ul>
     <div class="col-md-3 text-end">
         <button type="button" class="btn btn-outline-primary me-2">Login</button>
