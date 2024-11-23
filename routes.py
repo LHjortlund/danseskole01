@@ -277,30 +277,23 @@ def register_routes(app, db):
         return redirect(url_for('registrer_elev'))
 
     @app.route('/fremmøde/<int:dansehold_id>', methods=["GET", "POST"])
-    def registrer_fremmøde(dansehold_id):
+    def fremmøde(dansehold_id):
         dansehold = Dansehold.query.get_or_404(dansehold_id)
+        elever = [registrering.elev for registrering in dansehold.registreringer]
         datoer = generer_datoer(dansehold.startdato, dansehold.antal_gange)
 
         if request.method == "POST":
             for dato in datoer:
-                for elev in dansehold.elever:
-                    fremmødt = request.form.get(f'fremmødt_{elev.id}_{dato}') == "on"
-
-                        #tilføj only registrering for fremmødte elever
+                for elev in elever:
+                    fremmødt = request.form.get(f'fremmødt_{elev.id}_{dato.strftime("%Y-%m-%d")}')
                     if fremmødt:
                         eksisterende_fremmøde = Registering.query.filter_by(
-                            dato=dato,
-                            elev_id=elev.id,
-                            dansehold_id=dansehold.id
+                            dato=dato, elev_id=elev.id, dansehold_id=dansehold.id
                         ).first()
                         if not eksisterende_fremmøde:
-                            registrering = Registering(
-                                dato=dato,
-                                elev_id=elev.id,
-                                dansehold_id=dansehold.id
-                            )
-                            db.session.add(registrering)
-                    db.session.commit()
-                    return redirect(url_for('registrer_fremmøde', dansehold_id=dansehold.id))
+                            fremmøde_entry = Registering(dato=dato, elev_id=elev.id, dansehold_id=dansehold.id)
+                            db.session.add(fremmøde_entry)
+            db.session.commit()
+            return redirect(url_for('fremmøde', dansehold_id=dansehold.id))
 
-                return render_template('fremmøde.html', dansehold=dansehold, datoer=datoer)
+        return render_template('fremmøde.html', dansehold=dansehold, elever=elever, datoer=datoer)
