@@ -1,3 +1,15 @@
+**Som et led af 4.semester på datamatikeruddannelse med fokus på 2 valgfag, har jeg valgt at tage udgangpunkt i:** 
+- Valgfag 1: Python/webudvikling/Flask og
+- Valgfag 2: UX
+
+**Projektbeskrivelse:**
+Dette projekt tager udgangspunkt i en reel problemstilling, hvor denne dansevirksomhed mangler en digitalløsning på at kunne afkrydse fremmødte danseelever til afhold dansehold. Dette har de ikke en digitalløsning på. Det ønskes, da de på den måde kan få et hurtigt overblik om danseholdet er blevet afholdt og give en overblik over hvor mange danselever der er fremmødt.
+Dansevirksomheden er åben for både en app, men også en webapplikation. Dette repository tager udgangspunkt i en webapplikationsløsning. Derefter vil det være op til virksomheden, hvilken løsning de vil gå med.
+
+**PO's ønsker**
+- digital afkrydsningfunktion på en-eller-anden-digital-platform
+
+**Systemudviklings,etode**
 Der skal oprette en hjemmeside til en danseskole. 
 
 Indtil videre har jeg lidt styr på HTML og CSS, hvor jeg har arbejdet med bootstrap:
