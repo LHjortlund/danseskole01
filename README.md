@@ -16,6 +16,11 @@ Eks. på Dansehold-siden
 EKs. på Registrerings-siden
 ![image](https://github.com/user-attachments/assets/eac70e5a-ba23-43cc-ad9f-db34cd9df052)
 
+Eks. på fremmøde oversigt
+----
+
+Eks. på fremmøde (afkrydsning) under progress
+![image](https://github.com/user-attachments/assets/5adfdffb-fdb0-4272-97b8-c57ea05d215f)
 
 
 men der skal også være mere funktion bag, så derfor arbejder jeg kombineret tabellerne med hinanden så der er mulighed for at oprette elever og dansehold med dertilhørende, så der i sidste ende kan være en afkrydsningsfunktion.
