@@ -276,6 +276,11 @@ def register_routes(app, db):
         flash("Elev fjernet fra danseholdet.", "success")
         return redirect(url_for('registrer_elev'))
 
+    @app.route('/fremmøde', methods=["GET"])
+    def fremmoede_oversigt():
+        dansehold = Dansehold.query.all() #Get all dansehold
+        return render_template('fremmoede_oversigt.html', dansehold=dansehold)
+
     @app.route('/fremmøde/<int:dansehold_id>', methods=["GET", "POST"])
     def fremmoede(dansehold_id):
         dansehold = Dansehold.query.get_or_404(dansehold_id)
@@ -285,11 +290,14 @@ def register_routes(app, db):
             for dato in datoer:
                 for elev in dansehold.elever:
                     fremmødt = request.form.get(f'fremmødt_{elev.id}_{dato}') == "on"
-                    eksisterende_fremmøde = Fremmøde.query.filter_by(dato=dato, elev_id=elev.id,
+                    eksisterende_fremmøde = Fremmøde.query.filter_by(dato=dato,
+                                                                     elev_id=elev.id,
                                                                      dansehold_id=dansehold_id).first()
 
                     if fremmødt and not eksisterende_fremmøde:
-                        ny_fremmøde = Fremmøde(dato=dato, elev_id=elev.id, dansehold_id=dansehold_id)
+                        ny_fremmøde = Fremmøde(dato=dato,
+                                               elev_id=elev.id,
+                                               dansehold_id=dansehold_id)
                         db.session.add(ny_fremmøde)
                     elif not fremmødt and eksisterende_fremmøde:
                         db.session.delete(eksisterende_fremmøde)

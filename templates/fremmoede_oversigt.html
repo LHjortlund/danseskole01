@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block title %}Danseskole - Fremmøde Oversigt{% endblock %}
+
+{% block content %}
+<h1>Vælg et dansehold</h1>
+<ul>
+    {% for hold in dansehold %}
+        <li>
+            <a href="{{ url_for('fremmoede', dansehold_id=hold.id) }}">
+                {{ hold.id }} - Startdato: {{ hold.startdato }} - Stilart: {{ hold.stilart.stilart }}
+            </a>
+        </li>
+    {% endfor %}
+</ul>
+{% endblock %}
