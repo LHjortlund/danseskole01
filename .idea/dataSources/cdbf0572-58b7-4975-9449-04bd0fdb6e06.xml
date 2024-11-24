@@ -499,7 +499,7 @@
     <routine id="190" parent="1" name="fts5"/>
     <schema id="191" parent="1" name="main">
       <Current>1</Current>
-      <LastIntrospectionLocalTimestamp>2024-11-23.13:01:20</LastIntrospectionLocalTimestamp>
+      <LastIntrospectionLocalTimestamp>2024-11-24.14:48:20</LastIntrospectionLocalTimestamp>
     </schema>
     <argument id="192" parent="16">
       <ArgumentDirection>R</ArgumentDirection>
@@ -1593,265 +1593,305 @@
     <table id="555" parent="191" name="alembic_version"/>
     <table id="556" parent="191" name="dansehold"/>
     <table id="557" parent="191" name="elev"/>
-    <table id="558" parent="191" name="hold_deltager"/>
-    <table id="559" parent="191" name="instruktor"/>
-    <table id="560" parent="191" name="lokation"/>
-    <table id="561" parent="191" name="registering"/>
-    <table id="562" parent="191" name="sqlite_master">
+    <table id="558" parent="191" name="fremmoede"/>
+    <table id="559" parent="191" name="hold_deltager"/>
+    <table id="560" parent="191" name="instruktor"/>
+    <table id="561" parent="191" name="lokation"/>
+    <table id="562" parent="191" name="registering"/>
+    <table id="563" parent="191" name="sqlite_master">
       <System>1</System>
     </table>
-    <table id="563" parent="191" name="stilart"/>
-    <column id="564" parent="555" name="version_num">
+    <table id="564" parent="191" name="stilart"/>
+    <column id="565" parent="555" name="version_num">
       <NotNull>1</NotNull>
       <Position>1</Position>
       <StoredType>VARCHAR(32)|0s</StoredType>
     </column>
-    <index id="565" parent="555" name="sqlite_autoindex_alembic_version_1">
+    <index id="566" parent="555" name="sqlite_autoindex_alembic_version_1">
       <ColNames>version_num</ColNames>
       <NameSurrogate>1</NameSurrogate>
       <Unique>1</Unique>
     </index>
-    <key id="566" parent="555" name="alembic_version_pkc">
+    <key id="567" parent="555" name="alembic_version_pkc">
       <ColNames>version_num</ColNames>
       <Primary>1</Primary>
       <UnderlyingIndexName>sqlite_autoindex_alembic_version_1</UnderlyingIndexName>
     </key>
-    <column id="567" parent="556" name="id">
+    <column id="568" parent="556" name="id">
       <NotNull>1</NotNull>
       <Position>1</Position>
       <StoredType>INTEGER|0s</StoredType>
     </column>
-    <column id="568" parent="556" name="startdato">
+    <column id="569" parent="556" name="startdato">
       <NotNull>1</NotNull>
       <Position>2</Position>
       <StoredType>DATE|0s</StoredType>
     </column>
-    <column id="569" parent="556" name="antal_gange">
+    <column id="570" parent="556" name="antal_gange">
       <NotNull>1</NotNull>
       <Position>3</Position>
       <StoredType>INTEGER|0s</StoredType>
     </column>
-    <column id="570" parent="556" name="tidspunkt">
+    <column id="571" parent="556" name="tidspunkt">
       <NotNull>1</NotNull>
       <Position>4</Position>
       <StoredType>TIME|0s</StoredType>
     </column>
-    <column id="571" parent="556" name="beskrivelse">
-      <Position>5</Position>
-      <StoredType>VARCHAR(255)|0s</StoredType>
-    </column>
-    <column id="572" parent="556" name="instruktor_id">
+    <column id="572" parent="556" name="lokation_id">
       <NotNull>1</NotNull>
-      <Position>6</Position>
+      <Position>5</Position>
       <StoredType>INTEGER|0s</StoredType>
     </column>
-    <column id="573" parent="556" name="stilart_id">
+    <column id="573" parent="556" name="beskrivelse">
+      <Position>6</Position>
+      <StoredType>VARCHAR(255)|0s</StoredType>
+    </column>
+    <column id="574" parent="556" name="instruktor_id">
       <NotNull>1</NotNull>
       <Position>7</Position>
       <StoredType>INTEGER|0s</StoredType>
     </column>
-    <column id="574" parent="556" name="lokation_id">
+    <column id="575" parent="556" name="stilart_id">
       <NotNull>1</NotNull>
       <Position>8</Position>
-      <StoredType>VARCHAR(100)|0s</StoredType>
+      <StoredType>INTEGER|0s</StoredType>
     </column>
-    <foreign-key id="575" parent="556">
+    <foreign-key id="576" parent="556">
+      <ColNames>lokation_id</ColNames>
+      <RefColNames>id</RefColNames>
+      <RefTableName>lokation</RefTableName>
+    </foreign-key>
+    <foreign-key id="577" parent="556">
       <ColNames>instruktor_id</ColNames>
       <RefColNames>id</RefColNames>
       <RefTableName>instruktor</RefTableName>
     </foreign-key>
-    <foreign-key id="576" parent="556">
+    <foreign-key id="578" parent="556">
       <ColNames>stilart_id</ColNames>
       <RefColNames>id</RefColNames>
       <RefTableName>stilart</RefTableName>
     </foreign-key>
-    <key id="577" parent="556">
+    <key id="579" parent="556">
       <ColNames>id</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="578" parent="557" name="id">
+    <column id="580" parent="557" name="id">
       <NotNull>1</NotNull>
       <Position>1</Position>
       <StoredType>INTEGER|0s</StoredType>
     </column>
-    <column id="579" parent="557" name="fornavn">
+    <column id="581" parent="557" name="fornavn">
       <NotNull>1</NotNull>
       <Position>2</Position>
       <StoredType>VARCHAR(100)|0s</StoredType>
     </column>
-    <column id="580" parent="557" name="efternavn">
+    <column id="582" parent="557" name="efternavn">
       <NotNull>1</NotNull>
       <Position>3</Position>
       <StoredType>VARCHAR(100)|0s</StoredType>
     </column>
-    <column id="581" parent="557" name="fodselsdato">
+    <column id="583" parent="557" name="fodselsdato">
       <NotNull>1</NotNull>
       <Position>4</Position>
       <StoredType>VARCHAR(10)|0s</StoredType>
     </column>
-    <column id="582" parent="557" name="mobil">
+    <column id="584" parent="557" name="mobil">
       <NotNull>1</NotNull>
       <Position>5</Position>
       <StoredType>INTEGER|0s</StoredType>
     </column>
-    <key id="583" parent="557">
+    <key id="585" parent="557">
       <ColNames>id</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="584" parent="558" name="dansehold_id">
+    <column id="586" parent="558" name="id">
       <NotNull>1</NotNull>
       <Position>1</Position>
       <StoredType>INTEGER|0s</StoredType>
     </column>
-    <column id="585" parent="558" name="elev_id">
+    <column id="587" parent="558" name="dato">
       <NotNull>1</NotNull>
       <Position>2</Position>
+      <StoredType>DATE|0s</StoredType>
+    </column>
+    <column id="588" parent="558" name="elev_id">
+      <NotNull>1</NotNull>
+      <Position>3</Position>
       <StoredType>INTEGER|0s</StoredType>
     </column>
-    <foreign-key id="586" parent="558">
-      <ColNames>dansehold_id</ColNames>
-      <RefColNames>id</RefColNames>
-      <RefTableName>dansehold</RefTableName>
-    </foreign-key>
-    <foreign-key id="587" parent="558">
+    <column id="589" parent="558" name="dansehold_id">
+      <NotNull>1</NotNull>
+      <Position>4</Position>
+      <StoredType>INTEGER|0s</StoredType>
+    </column>
+    <foreign-key id="590" parent="558">
       <ColNames>elev_id</ColNames>
       <RefColNames>id</RefColNames>
       <RefTableName>elev</RefTableName>
     </foreign-key>
-    <index id="588" parent="558" name="sqlite_autoindex_hold_deltager_1">
+    <foreign-key id="591" parent="558">
+      <ColNames>dansehold_id</ColNames>
+      <RefColNames>id</RefColNames>
+      <RefTableName>dansehold</RefTableName>
+    </foreign-key>
+    <key id="592" parent="558">
+      <ColNames>id</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <column id="593" parent="559" name="dansehold_id">
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+      <StoredType>INTEGER|0s</StoredType>
+    </column>
+    <column id="594" parent="559" name="elev_id">
+      <NotNull>1</NotNull>
+      <Position>2</Position>
+      <StoredType>INTEGER|0s</StoredType>
+    </column>
+    <foreign-key id="595" parent="559">
+      <ColNames>dansehold_id</ColNames>
+      <RefColNames>id</RefColNames>
+      <RefTableName>dansehold</RefTableName>
+    </foreign-key>
+    <foreign-key id="596" parent="559">
+      <ColNames>elev_id</ColNames>
+      <RefColNames>id</RefColNames>
+      <RefTableName>elev</RefTableName>
+    </foreign-key>
+    <index id="597" parent="559" name="sqlite_autoindex_hold_deltager_1">
       <ColNames>dansehold_id
 elev_id</ColNames>
       <NameSurrogate>1</NameSurrogate>
       <Unique>1</Unique>
     </index>
-    <key id="589" parent="558">
+    <key id="598" parent="559">
       <ColNames>dansehold_id
 elev_id</ColNames>
       <Primary>1</Primary>
       <UnderlyingIndexName>sqlite_autoindex_hold_deltager_1</UnderlyingIndexName>
     </key>
-    <column id="590" parent="559" name="id">
+    <column id="599" parent="560" name="id">
       <NotNull>1</NotNull>
       <Position>1</Position>
       <StoredType>INTEGER|0s</StoredType>
     </column>
-    <column id="591" parent="559" name="fornavn">
+    <column id="600" parent="560" name="fornavn">
       <NotNull>1</NotNull>
       <Position>2</Position>
       <StoredType>VARCHAR(100)|0s</StoredType>
     </column>
-    <column id="592" parent="559" name="efternavn">
+    <column id="601" parent="560" name="efternavn">
       <NotNull>1</NotNull>
       <Position>3</Position>
       <StoredType>VARCHAR(100)|0s</StoredType>
     </column>
-    <column id="593" parent="559" name="email">
+    <column id="602" parent="560" name="email">
       <NotNull>1</NotNull>
       <Position>4</Position>
       <StoredType>VARCHAR(100)|0s</StoredType>
     </column>
-    <column id="594" parent="559" name="telefon">
+    <column id="603" parent="560" name="telefon">
       <NotNull>1</NotNull>
       <Position>5</Position>
       <StoredType>INTEGER|0s</StoredType>
     </column>
-    <index id="595" parent="559" name="sqlite_autoindex_instruktor_1">
+    <index id="604" parent="560" name="sqlite_autoindex_instruktor_1">
       <ColNames>email</ColNames>
       <NameSurrogate>1</NameSurrogate>
       <Unique>1</Unique>
     </index>
-    <key id="596" parent="559">
+    <key id="605" parent="560">
       <ColNames>id</ColNames>
       <Primary>1</Primary>
     </key>
-    <key id="597" parent="559">
+    <key id="606" parent="560">
       <ColNames>email</ColNames>
       <UnderlyingIndexName>sqlite_autoindex_instruktor_1</UnderlyingIndexName>
     </key>
-    <column id="598" parent="560" name="id">
+    <column id="607" parent="561" name="id">
       <NotNull>1</NotNull>
       <Position>1</Position>
       <StoredType>INTEGER|0s</StoredType>
     </column>
-    <column id="599" parent="560" name="adresse">
+    <column id="608" parent="561" name="adresse">
       <NotNull>1</NotNull>
       <Position>2</Position>
       <StoredType>VARCHAR(100)|0s</StoredType>
     </column>
-    <key id="600" parent="560">
+    <key id="609" parent="561">
       <ColNames>id</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="601" parent="561" name="id">
+    <column id="610" parent="562" name="id">
       <NotNull>1</NotNull>
       <Position>1</Position>
       <StoredType>INTEGER|0s</StoredType>
     </column>
-    <column id="602" parent="561" name="dato">
+    <column id="611" parent="562" name="dato">
       <NotNull>1</NotNull>
       <Position>2</Position>
       <StoredType>DATE|0s</StoredType>
     </column>
-    <column id="603" parent="561" name="dansehold_id">
+    <column id="612" parent="562" name="dansehold_id">
       <NotNull>1</NotNull>
       <Position>3</Position>
       <StoredType>INTEGER|0s</StoredType>
     </column>
-    <column id="604" parent="561" name="elev_id">
+    <column id="613" parent="562" name="elev_id">
       <NotNull>1</NotNull>
       <Position>4</Position>
       <StoredType>INTEGER|0s</StoredType>
     </column>
-    <foreign-key id="605" parent="561">
+    <foreign-key id="614" parent="562">
       <ColNames>dansehold_id</ColNames>
       <RefColNames>id</RefColNames>
       <RefTableName>dansehold</RefTableName>
     </foreign-key>
-    <foreign-key id="606" parent="561">
+    <foreign-key id="615" parent="562">
       <ColNames>elev_id</ColNames>
       <RefColNames>id</RefColNames>
       <RefTableName>elev</RefTableName>
     </foreign-key>
-    <key id="607" parent="561">
+    <key id="616" parent="562">
       <ColNames>id</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="608" parent="562" name="type">
+    <column id="617" parent="563" name="type">
       <Position>1</Position>
       <StoredType>TEXT|0s</StoredType>
     </column>
-    <column id="609" parent="562" name="name">
+    <column id="618" parent="563" name="name">
       <Position>2</Position>
       <StoredType>TEXT|0s</StoredType>
     </column>
-    <column id="610" parent="562" name="tbl_name">
+    <column id="619" parent="563" name="tbl_name">
       <Position>3</Position>
       <StoredType>TEXT|0s</StoredType>
     </column>
-    <column id="611" parent="562" name="rootpage">
+    <column id="620" parent="563" name="rootpage">
       <Position>4</Position>
       <StoredType>INT|0s</StoredType>
     </column>
-    <column id="612" parent="562" name="sql">
+    <column id="621" parent="563" name="sql">
       <Position>5</Position>
       <StoredType>TEXT|0s</StoredType>
     </column>
-    <column id="613" parent="563" name="id">
+    <column id="622" parent="564" name="id">
       <NotNull>1</NotNull>
       <Position>1</Position>
       <StoredType>INTEGER|0s</StoredType>
     </column>
-    <column id="614" parent="563" name="stilart">
+    <column id="623" parent="564" name="stilart">
       <NotNull>1</NotNull>
       <Position>2</Position>
       <StoredType>VARCHAR(100)|0s</StoredType>
     </column>
-    <column id="615" parent="563" name="beskrivelse">
+    <column id="624" parent="564" name="beskrivelse">
       <NotNull>1</NotNull>
       <Position>3</Position>
       <StoredType>VARCHAR(100)|0s</StoredType>
     </column>
-    <key id="616" parent="563">
+    <key id="625" parent="564">
       <ColNames>id</ColNames>
       <Primary>1</Primary>
     </key>

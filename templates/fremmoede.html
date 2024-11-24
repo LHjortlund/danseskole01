@@ -5,7 +5,11 @@
 {% block content %}
 
 <h1>Fremmøde for {{ dansehold.stilart.stilart }}</h1>
-<form method="POST" action="{{ url_for('fremmoede', dansehold_id=dansehold.id) }}">
+<h3>Instruktør: {{ dansehold.instruktor.fornavn }} {{ dansehold.instruktor.efternavn }}</h3>
+<h4>Lokation: {{ dansehold.lokation.adresse }}</h4>
+<h4>Klokken: {{ dansehold.tidspunkt }}</h4>
+
+<form method="POST" action="{{ url_for('registrer_fremmoede', dansehold_id=dansehold.id) }}">
     <table class="table table-striped">
         <thead>
             <tr>
@@ -21,10 +25,10 @@
                     <td>{{ elev.fornavn }} {{ elev.efternavn }}</td>
                     {% for dato in datoer %}
                         <td>
-                            <input type="checkbox" name="fremmødt_{{ elev.id }}_{{ dato }}"
-                                   {% if fremmoede.query.filter_by(elev_id=elev.id, dansehold_id=dansehold.id, dato=dato).first() %}
-                                   checked
-                                   {% endif %}>
+                            <input type="checkbox" name="fremmoede_{{ elev.id }}_{{ dato }}"
+<!--                                   {% if fremmøde.query.filter_by(elev_id=elev.id, dansehold_id=dansehold.id, dato=dato).first() %}-->
+<!--                                   checked-->
+<!--                                   {% endif %}>-->
                         </td>
                     {% endfor %}
                 </tr>

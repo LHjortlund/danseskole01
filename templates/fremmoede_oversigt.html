@@ -7,7 +7,7 @@
 <ul>
     {% for hold in dansehold %}
         <li>
-            <a href="{{ url_for('fremmoede', dansehold_id=hold.id) }}">
+            <a href="{{ url_for('registrer_fremmoede', dansehold_id=hold.id) }}">
                 {{ hold.id }} - Startdato: {{ hold.startdato }} - Stilart: {{ hold.stilart.stilart }}
             </a>
         </li>
