@@ -292,12 +292,19 @@ def register_routes(app, db):
         datoer = generer_datoer(dansehold.startdato, dansehold.antal_gange)
 
         # Byg fremmøde-data-struktur baseret på registreringer
+        if fremmoede.elev_id in fremmoede_data and fremmoede.dato in fremmoede_data[fremmoede.elev_id]:
+            fremmoede_data[fremmoede.elev_id][fremmoede.dato] = True
+        else:
+            print(f"Advarsel: elev_id {fremmoede.elev_id} eller dato {fremmoede.dato} findes ikke i fremmoede_data.")
+
         fremmoede_data = {elev.id: {dato: False for dato in datoer} for elev in elever}
         eksisterende_fremmoeder = Registering.query.filter_by(dansehold_id=dansehold_id).all()
+        print(f"Elever i dansehold {dansehold_id}: {[elev.id for elev in elever]}")
+        print(f"Datoer for fremmøde: {datoer}")
 
         # Marker eksisterende fremmøder som `True`
         for fremmoede in eksisterende_fremmoeder:
-            fremmoede_data[fremmoede.elev_id][fremmoede.dato] = True
+            fremmoede_data = {elev.id: {dato: False for dato in datoer} for elev in elever}
 
         if request.method == "POST":
             # Processér fremmødedata fra formular
