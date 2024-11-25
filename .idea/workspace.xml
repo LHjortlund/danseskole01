@@ -4,11 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="16509979-aa88-48c9-8ed5-e174001064a2" name="Changes" comment="not working..fremmoede..">
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/cdbf0572-58b7-4975-9449-04bd0fdb6e06.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/cdbf0572-58b7-4975-9449-04bd0fdb6e06.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    <list default="true" id="16509979-aa88-48c9-8ed5-e174001064a2" name="Changes" comment="working..">
       <change beforePath="$PROJECT_DIR$/routes.py" beforeDir="false" afterPath="$PROJECT_DIR$/routes.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/fremmoede.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/fremmoede.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -136,15 +133,7 @@
       <workItem from="1732520145866" duration="1719000" />
       <workItem from="1732521979855" duration="7687000" />
       <workItem from="1732531385030" duration="7584000" />
-      <workItem from="1732541893434" duration="9156000" />
-    </task>
-    <task id="LOCAL-00045" summary="update, men ingen løsning endnu">
-      <option name="closed" value="true" />
-      <created>1730976645224</created>
-      <option name="number" value="00045" />
-      <option name="presentableId" value="LOCAL-00045" />
-      <option name="project" value="LOCAL" />
-      <updated>1730976645224</updated>
+      <workItem from="1732541893434" duration="9458000" />
     </task>
     <task id="LOCAL-00046" summary="tilføjet Hero til index.html">
       <option name="closed" value="true" />
@@ -530,7 +519,15 @@
       <option name="project" value="LOCAL" />
       <updated>1732569691144</updated>
     </task>
-    <option name="localTasksCounter" value="94" />
+    <task id="LOCAL-00094" summary="working..">
+      <option name="closed" value="true" />
+      <created>1732570349602</created>
+      <option name="number" value="00094" />
+      <option name="presentableId" value="LOCAL-00094" />
+      <option name="project" value="LOCAL" />
+      <updated>1732570349602</updated>
+    </task>
+    <option name="localTasksCounter" value="95" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -548,7 +545,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="opdater dansehold.html" />
     <MESSAGE value="update, update" />
     <MESSAGE value="oprettet instruktor.html" />
     <MESSAGE value="ændringer til dansehold" />
@@ -573,7 +569,8 @@
     <MESSAGE value="ændringer i routes og models" />
     <MESSAGE value="not working..fremmoede" />
     <MESSAGE value="not working..fremmoede.." />
-    <option name="LAST_COMMIT_MESSAGE" value="not working..fremmoede.." />
+    <MESSAGE value="working.." />
+    <option name="LAST_COMMIT_MESSAGE" value="working.." />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/danseskole01$routes.coverage" NAME="routes Coverage Results" MODIFIED="1732109278702" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />

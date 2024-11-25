@@ -290,6 +290,8 @@ def register_routes(app, db):
         dansehold = Dansehold.query.get_or_404(dansehold_id)
         elever = dansehold.elever
         print("Elever:", elever)  # Log til kontrol
+        print("Dansehold:", dansehold)  # Til debug
+        print("Elever hentet for dansehold:", elever)  # Til debug
 
         # Generér datoer baseret på startdato og antal gange
         datoer = generer_datoer(dansehold.startdato, dansehold.antal_gange)
