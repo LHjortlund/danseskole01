@@ -297,7 +297,8 @@ def register_routes(app, db):
         # Initialiser fremmødedata (afkrydsning)
         fremmoede_data = {elev.id: {dato: False for dato in datoer} for elev in elever}
         print("Fremmøde data:", fremmoede_data)
-
+        print("Elever:", elever)  # Tjek om elever er tom
+        print("Datoer:", datoer)  # Tjek om datoer er korrekt genereret
 
         # Hent eksisterende fremmøder
         eksisterende_fremmoeder = Registering.query.filter_by(dansehold_id=dansehold_id).all()
@@ -337,6 +338,9 @@ def register_routes(app, db):
                         db.session.delete(eksisterende)
 
             db.session.commit()
+            print("Ny registrering oprettet!")
+            print(f"Elev ID: {elev.id}, Dato: {dato.strftime('%Y-%m-%d')}")
+
             flash("Fremmøde opdateret!", "success")
             return redirect(url_for('registrer_fremmoede', dansehold_id=dansehold_id))
 
