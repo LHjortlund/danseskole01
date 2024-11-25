@@ -28,8 +28,9 @@ Eks. på Dansehold-siden
 EKs. på Registrerings-siden
 ![image](https://github.com/user-attachments/assets/eac70e5a-ba23-43cc-ad9f-db34cd9df052)
 
-Eks. på fremmøde oversigt
-----
+**Eks. på fremmøde oversigt**
+![image](https://github.com/user-attachments/assets/0624b452-45cd-46bf-9bde-0ec83774fa87)
+
 
 Eks. på fremmøde (afkrydsning) under progress
 ![image](https://github.com/user-attachments/assets/5adfdffb-fdb0-4272-97b8-c57ea05d215f)
