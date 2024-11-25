@@ -25,10 +25,10 @@
                     <td>{{ elev.fornavn }} {{ elev.efternavn }}</td>
                     {% for dato in datoer %}
                         <td>
-                            <input type="checkbox" name="fremmoede_{{ elev.id }}_{{ dato }}"
-<!--                                   {% if fremmøde.query.filter_by(elev_id=elev.id, dansehold_id=dansehold.id, dato=dato).first() %}-->
-<!--                                   checked-->
-<!--                                   {% endif %}>-->
+                            <input type="checkbox" name="fremmoede_{{ elev.id }}_{{ dato.strftime('%Y-%m-%d') }}">
+                                {% if fremmoede.query.filter_by(elev_id=elev.id, dansehold_id=dansehold.id, dato=dato).first() %}
+                                   checked
+                                   {% endif %}
                         </td>
                     {% endfor %}
                 </tr>

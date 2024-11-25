@@ -292,17 +292,19 @@ def register_routes(app, db):
             for dato in datoer:
                 for elev in dansehold.elever:
                     #Check om elev er fremmødt
-                    fremmoede = request.form.get(f'fremmoede_{elev.id}_{dato}') == "on"
+                    fremmoede_key = f'fremmoede_{elev.id}_{dato.strftime("%Y-%m-%d")}'
+                    fremmoede = request.form.get(fremmoede_key) == "on"
 
                     if fremmoede:
-                        eksisterende_fremmoede = Registering.query.filter_by(dato=dato,
-                                                                            elev_id=elev.id,
-                                                                            dansehold_id=dansehold.id).first()
+                        eksisterende_fremmoede = Fremmøde.query.filter_by(
+                        dato=dato, elev_id=elev.id, dansehold_id=dansehold.id
+                    ).first()
+
                     if not eksisterende_fremmoede:
                         #Opret if not allerede registreret
-                        registrering = Registering(
+                        ny_fremmoede = Fremmøde(
                             dato=dato, elev_id=elev.id, dansehold_id=dansehold.id)
-                        db.session.add(registrering)
+                        db.session.add(ny_fremmoede)
 
             db.session.commit()
             return redirect(url_for('registrer_fremmoede', dansehold_id=dansehold_id))
