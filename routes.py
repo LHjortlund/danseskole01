@@ -286,57 +286,68 @@ def register_routes(app, db):
 
     @app.route('/fremmøde/<int:dansehold_id>', methods=["GET", "POST"])
     def registrer_fremmoede(dansehold_id):
-        #Get all dansehold og generere datoer
+        # Hent dansehold og dets elever
         dansehold = Dansehold.query.get_or_404(dansehold_id)
         elever = dansehold.elever
+        print("Elever:", elever)  # Log til kontrol
+
+        # Generér datoer baseret på startdato og antal gange
         datoer = generer_datoer(dansehold.startdato, dansehold.antal_gange)
 
-        # Byg fremmøde-data-struktur baseret på registreringer
-        if fremmoede.elev_id in fremmoede_data and fremmoede.dato in fremmoede_data[fremmoede.elev_id]:
-            fremmoede_data[fremmoede.elev_id][fremmoede.dato] = True
-        else:
-            print(f"Advarsel: elev_id {fremmoede.elev_id} eller dato {fremmoede.dato} findes ikke i fremmoede_data.")
-
+        # Initialiser fremmødedata (afkrydsning)
         fremmoede_data = {elev.id: {dato: False for dato in datoer} for elev in elever}
+        print("Fremmøde data:", fremmoede_data)
+
+
+        # Hent eksisterende fremmøder
         eksisterende_fremmoeder = Registering.query.filter_by(dansehold_id=dansehold_id).all()
-        print(f"Elever i dansehold {dansehold_id}: {[elev.id for elev in elever]}")
-        print(f"Datoer for fremmøde: {datoer}")
+        print("Eksisterende fremmøder:", eksisterende_fremmoeder)
 
         # Marker eksisterende fremmøder som `True`
         for fremmoede in eksisterende_fremmoeder:
-            fremmoede_data = {elev.id: {dato: False for dato in datoer} for elev in elever}
+            # Vi skal tjekke om både elev_id og dato findes i fremmoede_data
+            if fremmoede.elev_id in fremmoede_data:
+                if fremmoede.dato in fremmoede_data[fremmoede.elev_id]:
+                    fremmoede_data[fremmoede.elev_id][fremmoede.dato] = True
+
 
         if request.method == "POST":
-            # Processér fremmødedata fra formular
+            print("Post request received!")
+            print("Request form data:", request.form)
+            # Processér data fra formularen
             for dato in datoer:
                 for elev in elever:
-                    # Check om fremmøde er markeret i formularen
                     fremmoede_key = f'fremmoede_{elev.id}_{dato.strftime("%Y-%m-%d")}'
                     fremmoede_checked = request.form.get(fremmoede_key) == "on"
 
-                    if fremmoede_checked:
-                        # Tjek om fremmøde allerede eksisterer
-                        eksisterende = Registering.query.filter_by(
-                            dato=dato, elev_id=elev.id, dansehold_id=dansehold_id
-                        ).first()
-                        if not eksisterende:
-                            # Tilføj ny fremmøde-post
-                            print(f"Tilføjer fremmøde for elev {elev.id} på dato {dato}")
-                            ny_fremmoede = Registering(dato=dato, elev_id=elev.id, dansehold_id=dansehold_id)
-                            db.session.add(ny_fremmoede)
-                    else:
-                        # Fjern fremmøde hvis ikke markeret
-                        eksisterende = Registering.query.filter_by(
-                            dato=dato, elev_id=elev.id, dansehold_id=dansehold_id
-                        ).first()
-                        if eksisterende:
-                            print(f"Sletter fremmøde for elev {elev.id} på dato {dato}")
-                            db.session.delete(eksisterende)
+                    eksisterende = Registering.query.filter_by(
+                        dato=dato, elev_id=elev.id, dansehold_id=dansehold_id
+                    ).first()
+
+                    if fremmoede_checked and not eksisterende:
+                        # Opret ny registrering
+                        ny_registrering = Registering(
+                            dato=dato,
+                            elev_id=elev.id,
+                            dansehold_id=dansehold_id
+                        )
+                        db.session.add(ny_registrering)
+                    elif not fremmoede_checked and eksisterende:
+                        # Slet eksisterende fremmøde
+                        db.session.delete(eksisterende)
 
             db.session.commit()
+            flash("Fremmøde opdateret!", "success")
             return redirect(url_for('registrer_fremmoede', dansehold_id=dansehold_id))
 
-        return render_template('fremmoede.html', dansehold=dansehold, datoer=datoer, fremmoede_data=fremmoede_data)
+        print("Opdateret fremmøde data:", fremmoede_data)
+
+        return render_template(
+            'fremmoede.html',
+            dansehold=dansehold,
+            datoer=datoer,
+            fremmoede_data=fremmoede_data
+        )
 
     @app.route('/opret_fremmoede', methods=['POST'])
     def opret_fremmoede():

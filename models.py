@@ -86,6 +86,9 @@ class Registering(db.Model):
 # Event listener, der automatisk opretter Fremmøde, når en Registering oprettes
 @listens_for(Registering, 'after_insert')
 def opret_fremmoede_automatisk(mapper, connection, target):
+    print(
+        f"Registering oprettet for Elev ID: {target.elev_id}, Dansehold ID: {target.dansehold_id}, Dato: {target.dato}")
+
     # Opret en Fremmøde-post, når en Registering oprettes
     nyt_fremmoede = Fremmøde(
         dato=target.dato,
@@ -97,6 +100,8 @@ def opret_fremmoede_automatisk(mapper, connection, target):
     from app import db
     with db.session.begin(subtransactions=True):
         db.session.add(nyt_fremmoede)
+        print(
+            f"Fremmøde oprettet for Elev ID: {target.elev_id}, Dansehold ID: {target.dansehold_id}, Dato: {target.dato}")
 
 #Registrering af fremmøde, gør det muligt at gemme fremmøde for hver dato, elev og dansehold
 class Fremmøde(db.Model):

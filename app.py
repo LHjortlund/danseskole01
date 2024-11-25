@@ -1,7 +1,7 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
-from models import db, Elev
+from models import db, Elev, Dansehold, Registering
 from routes import register_routes
 
 def create_app():

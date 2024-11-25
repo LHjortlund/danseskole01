@@ -23,10 +23,12 @@
                 <tr>
                     <td><strong>{{ elev.fornavn }} {{ elev.efternavn }}</strong></td>
                     {% for dato in datoer %}
-                        <td>
-                            <input type="checkbox" name="fremmoede_{{ elev.id }}_{{ dato.strftime('%Y-%m-%d') }}"
-                                {% if fremmoede_data[elev.id][dato] %}checked{% endif %}>>
-                        </td>
+
+                        <td class="text-center">
+    <input type="checkbox"
+           name="fremmoede_{{ elev.id }}_{{ dato.strftime('%Y-%m-%d') }}"
+           {% if fremmoede_data[elev.id][dato] %}checked{% else %}unchecked{% endif %}>
+</td>
                     {% endfor %}
                 </tr>
             {% endfor %}
