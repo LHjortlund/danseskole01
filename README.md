@@ -39,5 +39,5 @@ Der skal oprette en hjemmeside til en danseskole.
 
 men der skal også være mere funktion bag, så derfor arbejder jeg kombineret tabellerne med hinanden så der er mulighed for at oprette elever og dansehold med dertilhørende, så der i sidste ende kan være en afkrydsningsfunktion.
 
-* *Ønsker, hvis afkrydsningsfunktionen lykkes.* *
-Der skal senere hen også oprettes medarbejder login og admin login, så kun admin har ret til at slette fx Elver og lignende.
+_Ønsker, hvis afkrydsningsfunktionen lykkes._
+_Mulighed for at der er medarbejder login og admin login, så fx kun admin har ret til at slette fx Elever og lignende._
