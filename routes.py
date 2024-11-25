@@ -1,6 +1,9 @@
 from flask import render_template, request, redirect, url_for, flash
 from models import db, Elev, Lokation, Dansehold, hold_deltager, Stilart, Instruktor, Registering, Fremmøde
 from datetime import datetime, date, timedelta
+import logging
+
+logging.basicConfig(level=logging.DEBUG)
 
 # Hjælpefunktion til at generere datoer
 def generer_datoer(startdato, antal_gange):
@@ -285,28 +288,68 @@ def register_routes(app, db):
     def registrer_fremmoede(dansehold_id):
         #Get all dansehold og generere datoer
         dansehold = Dansehold.query.get_or_404(dansehold_id)
-        datoer = [dansehold.startdato + timedelta(weeks=i) for i in range(dansehold.antal_gange)]
+        elever = dansehold.elever
+        datoer = generer_datoer(dansehold.startdato, dansehold.antal_gange)
+
+        # Byg fremmøde-data-struktur baseret på registreringer
+        fremmoede_data = {elev.id: {dato: False for dato in datoer} for elev in elever}
+        eksisterende_fremmoeder = Registering.query.filter_by(dansehold_id=dansehold_id).all()
+
+        # Marker eksisterende fremmøder som `True`
+        for fremmoede in eksisterende_fremmoeder:
+            fremmoede_data[fremmoede.elev_id][fremmoede.dato] = True
 
         if request.method == "POST":
-            #behandling af fremmøde
+            # Processér fremmødedata fra formular
             for dato in datoer:
-                for elev in dansehold.elever:
-                    #Check om elev er fremmødt
+                for elev in elever:
+                    # Check om fremmøde er markeret i formularen
                     fremmoede_key = f'fremmoede_{elev.id}_{dato.strftime("%Y-%m-%d")}'
-                    fremmoede = request.form.get(fremmoede_key) == "on"
+                    fremmoede_checked = request.form.get(fremmoede_key) == "on"
 
-                    if fremmoede:
-                        eksisterende_fremmoede = Fremmøde.query.filter_by(
-                        dato=dato, elev_id=elev.id, dansehold_id=dansehold.id
-                    ).first()
-
-                    if not eksisterende_fremmoede:
-                        #Opret if not allerede registreret
-                        ny_fremmoede = Fremmøde(
-                            dato=dato, elev_id=elev.id, dansehold_id=dansehold.id)
-                        db.session.add(ny_fremmoede)
+                    if fremmoede_checked:
+                        # Tjek om fremmøde allerede eksisterer
+                        eksisterende = Registering.query.filter_by(
+                            dato=dato, elev_id=elev.id, dansehold_id=dansehold_id
+                        ).first()
+                        if not eksisterende:
+                            # Tilføj ny fremmøde-post
+                            print(f"Tilføjer fremmøde for elev {elev.id} på dato {dato}")
+                            ny_fremmoede = Registering(dato=dato, elev_id=elev.id, dansehold_id=dansehold_id)
+                            db.session.add(ny_fremmoede)
+                    else:
+                        # Fjern fremmøde hvis ikke markeret
+                        eksisterende = Registering.query.filter_by(
+                            dato=dato, elev_id=elev.id, dansehold_id=dansehold_id
+                        ).first()
+                        if eksisterende:
+                            print(f"Sletter fremmøde for elev {elev.id} på dato {dato}")
+                            db.session.delete(eksisterende)
 
             db.session.commit()
             return redirect(url_for('registrer_fremmoede', dansehold_id=dansehold_id))
 
-        return render_template('fremmoede.html', dansehold=dansehold, datoer=datoer)
+        return render_template('fremmoede.html', dansehold=dansehold, datoer=datoer, fremmoede_data=fremmoede_data)
+
+    @app.route('/opret_fremmoede', methods=['POST'])
+    def opret_fremmoede():
+        try:
+            # Hent alle registreringer, som skal overføres til fremmøder
+            registreringer = Registering.query.all()
+
+            for registrering in registreringer:
+                # Opret en ny Fremmøde-post
+                nyt_fremmoede = Fremmøde(
+                    dato=registrering.dato,
+                    elev_id=registrering.elev_id,
+                    dansehold_id=registrering.dansehold_id,
+                    registering_id=registrering.id  # Reference til den originale registrering
+                )
+                db.session.add(nyt_fremmoede)
+
+            # Gem ændringerne i databasen
+            db.session.commit()
+            return "Fremmøder oprettet fra registreringer!"
+        except Exception as e:
+            db.session.rollback()
+            return f"Der opstod en fejl: {str(e)}"

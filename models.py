@@ -11,6 +11,7 @@ hold_deltager = db.Table('hold_deltager',
                          db.Column('elev_id', db.Integer, db.ForeignKey('elev.id'), primary_key=True)
 )
 
+
 #Elev-klassen represents en elev in the system
 class Elev(db.Model):
     __tablename__ = 'elev'
@@ -81,13 +82,33 @@ class Registering(db.Model):
     dansehold = db.relationship('Dansehold', backref=backref('registreringer', cascade='all, delete-orphan'))
     elev = db.relationship('Elev', backref=backref('registreringer', cascade='all, delete-orphan'))
 
+# Event listener, der automatisk opretter Fremmøde, når en Registering oprettes
+@listens_for(Registering, 'after_insert')
+def opret_fremmoede_automatisk(mapper, connection, target):
+    # Opret en Fremmøde-post, når en Registering oprettes
+    nyt_fremmoede = Fremmøde(
+        dato=target.dato,
+        elev_id=target.elev_id,
+        dansehold_id=target.dansehold_id,
+        registering_id=target.id  # Reference til den oprettede registrering
+    )
+    # Brug en ny session til at tilføje Fremmøde
+    from app import db
+    with db.session.begin(subtransactions=True):
+        db.session.add(nyt_fremmoede)
+
 #Registrering af fremmøde, gør det muligt at gemme fremmøde for hver dato, elev og dansehold
 class Fremmøde(db.Model):
     __tablename__ = 'fremmoede'
     id = db.Column(db.Integer, primary_key=True)
     dato = db.Column(db.Date, nullable=False)
+
+    #Fremmed nøgler
     elev_id = db.Column(db.Integer, db.ForeignKey('elev.id'), nullable=False)
     dansehold_id = db.Column(db.Integer, db.ForeignKey('dansehold.id'), nullable=False)
+    registering_id = db.Column(db.Integer, db.ForeignKey('registering.id'), nullable=True)
 
+    #Relationer
     elev = db.relationship('Elev', backref=backref('fremmoeder', cascade='all, delete-orphan'))
     dansehold = db.relationship('Dansehold', backref=backref('fremmoeder', cascade='all, delete-orphan'))
+    registering = db.relationship('Registering', backref=backref('fremmoeder', cascade='all, delete-orphan'))

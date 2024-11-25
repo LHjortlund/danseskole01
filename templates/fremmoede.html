@@ -3,7 +3,6 @@
 {% block title %}Danseskole - Fremmøde{% endblock %}
 
 {% block content %}
-
 <h1>Fremmøde for {{ dansehold.stilart.stilart }}</h1>
 <h3>Instruktør: {{ dansehold.instruktor.fornavn }} {{ dansehold.instruktor.efternavn }}</h3>
 <h4>Lokation: {{ dansehold.lokation.adresse }}</h4>
@@ -15,20 +14,18 @@
             <tr>
                 <th>Elev</th>
                 {% for dato in datoer %}
-                    <th>{{ dato.strftime('%d/%m/%Y') }}</th>
+                    <th class="text-center">{{ dato.strftime('%d/%m/%Y') }}</th>
                 {% endfor %}
             </tr>
         </thead>
         <tbody>
             {% for elev in dansehold.elever %}
                 <tr>
-                    <td>{{ elev.fornavn }} {{ elev.efternavn }}</td>
+                    <td><strong>{{ elev.fornavn }} {{ elev.efternavn }}</strong></td>
                     {% for dato in datoer %}
                         <td>
-                            <input type="checkbox" name="fremmoede_{{ elev.id }}_{{ dato.strftime('%Y-%m-%d') }}">
-                                {% if fremmoede.query.filter_by(elev_id=elev.id, dansehold_id=dansehold.id, dato=dato).first() %}
-                                   checked
-                                   {% endif %}
+                            <input type="checkbox" name="fremmoede_{{ elev.id }}_{{ dato.strftime('%Y-%m-%d') }}"
+                                {% if fremmoede_data[elev.id][dato] %}checked{% endif %}>>
                         </td>
                     {% endfor %}
                 </tr>
@@ -37,7 +34,5 @@
     </table>
     <button type="submit" class="btn btn-primary">Gem Fremmøde</button>
 </form>
-
-
 {% endblock %}
 
