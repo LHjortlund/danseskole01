@@ -69,6 +69,9 @@ class Dansehold(db.Model):
     lokation = db.relationship('Lokation', backref='dansehold')
     elever = db.relationship('Elev', secondary=hold_deltager, back_populates="dansehold")
 
+    def __repr__(self):
+        return f'Dansehold {self.id}, Startdato: {self.startdato}, Lokation: {self.lokation.adresse}'
+
 
 # Registering-klassen repræsenterer en registrering af en elevs deltagelse på en specifik dato
 class Registering(db.Model):
@@ -96,12 +99,6 @@ def opret_fremmoede_automatisk(mapper, connection, target):
         dansehold_id=target.dansehold_id,
         registering_id=target.id  # Reference til den oprettede registrering
     )
-    # Brug en ny session til at tilføje Fremmøde
-    from app import db
-    with db.session.begin(subtransactions=True):
-        db.session.add(nyt_fremmoede)
-        print(
-            f"Fremmøde oprettet for Elev ID: {target.elev_id}, Dansehold ID: {target.dansehold_id}, Dato: {target.dato}")
 
 #Registrering af fremmøde, gør det muligt at gemme fremmøde for hver dato, elev og dansehold
 class Fremmøde(db.Model):

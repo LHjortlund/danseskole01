@@ -257,13 +257,29 @@ def register_routes(app, db):
                     if eksisterende_registrering:
                         flash(f"Elev med ID {elev_id} er allerede tilmeldt danseholdet.", "warning")
                     else:
+                        #opretter ny registrering
                         registrering = Registering(
                             dato=date.today(),
                             dansehold_id=dansehold_id,
                             elev_id=elev_id)
                         db.session.add(registrering)
-                    db.session.commit()
-                    flash("Registrering tilføjet!", "Succes")
+
+                        #Opret Fremmøde automatisk for denne registerering
+                        nyt_fremmoede = Fremmøde(
+                            dato=registrering.dato,
+                            elev_id=registrering.elev_id,
+                            dansehold_id=registrering.dansehold_id,
+                            registrering_id=registrering.id #Reference til den oprettede registrering
+                        )
+                        #Tilføj Fremmøde til sessionen
+                        db.session.add(nyt_fremmoede)
+
+            try:
+                db.session.commit()  # Commit kun én gang
+                flash("Registrering tilføjet!", "success")
+            except Exception as e:
+                db.session.rollback()  # Rul tilbage ved fejl
+                flash(f"Fejl ved tilføjelse af registrering: {str(e)}", "danger")
 
         registreringer = Registering.query.all()  # Henter alle registreringer
         return render_template('registrering.html',
